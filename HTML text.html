@@ -1,0 +1,994 @@
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+
+<p class="p1">I want this to be a website and then pined to my Home Screen give me easiest step by step do not adjust code :<span class="Apple-converted-space"> </span></p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!DOCTYPE html&gt;<br>
+&lt;html lang="en"&gt;<br>
+&lt;head&gt;<br>
+&lt;meta charset="UTF-8"/&gt;<br>
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/&gt;<br>
+&lt;meta name="apple-mobile-web-app-capable" content="yes"/&gt;<br>
+&lt;meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/&gt;<br>
+&lt;meta name="apple-mobile-web-app-title" content="Nighthawk"/&gt;<br>
+&lt;meta name="theme-color" content="#0a0e1a"/&gt;<br>
+&lt;title&gt;Project Nighthawk&lt;/title&gt;<br>
+&lt;link href="<a href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap">https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap</a>" rel="stylesheet"/&gt;<br>
+&lt;style&gt;<br>
+<span class="Apple-converted-space">  </span>:root {<br>
+<span class="Apple-converted-space">    </span>--navy: #0a0e1a;<br>
+<span class="Apple-converted-space">    </span>--navy2: #111827;<br>
+<span class="Apple-converted-space">    </span>--card: #161d2e;<br>
+<span class="Apple-converted-space">    </span>--card2: #1c2440;<br>
+<span class="Apple-converted-space">    </span>--amber: #c8a96e;<br>
+<span class="Apple-converted-space">    </span>--amber-light: #e8c98a;<br>
+<span class="Apple-converted-space">    </span>--teal: #4ecdc4;<br>
+<span class="Apple-converted-space">    </span>--cream: #e8e4d9;<br>
+<span class="Apple-converted-space">    </span>--muted: #6b7a99;<br>
+<span class="Apple-converted-space">    </span>--steel: #3a4155;<br>
+<span class="Apple-converted-space">    </span>--red: #e05c5c;<br>
+<span class="Apple-converted-space">    </span>--green: #5cb85c;<br>
+<span class="Apple-converted-space">    </span>--gold: #c8a96e;<br>
+<span class="Apple-converted-space">    </span>--border: #1e2840;<br>
+<span class="Apple-converted-space">    </span>--safe-top: env(safe-area-inset-top, 0px);<br>
+<span class="Apple-converted-space">    </span>--safe-bottom: env(safe-area-inset-bottom, 0px);<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }<br>
+<span class="Apple-converted-space">  </span>body {<br>
+<span class="Apple-converted-space">    </span>background: var(--navy);<br>
+<span class="Apple-converted-space">    </span>color: var(--cream);<br>
+<span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif;<br>
+<span class="Apple-converted-space">    </span>min-height: 100vh;<br>
+<span class="Apple-converted-space">    </span>overflow-x: hidden;<br>
+<span class="Apple-converted-space">    </span>padding-bottom: calc(70px + var(--safe-bottom));<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>/* HEADER */<br>
+<span class="Apple-converted-space">  </span>.app-header {<br>
+<span class="Apple-converted-space">    </span>background: var(--navy);<br>
+<span class="Apple-converted-space">    </span>padding: calc(var(--safe-top) + 16px) 20px 0;<br>
+<span class="Apple-converted-space">    </span>position: sticky;<br>
+<span class="Apple-converted-space">    </span>top: 0;<br>
+<span class="Apple-converted-space">    </span>z-index: 100;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.header-top {<br>
+<span class="Apple-converted-space">    </span>display: flex;<br>
+<span class="Apple-converted-space">    </span>justify-content: space-between;<br>
+<span class="Apple-converted-space">    </span>align-items: flex-start;<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 14px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.app-title {<br>
+<span class="Apple-converted-space">    </span>font-family: 'Playfair Display', serif;<br>
+<span class="Apple-converted-space">    </span>font-size: 22px;<br>
+<span class="Apple-converted-space">    </span>font-weight: 900;<br>
+<span class="Apple-converted-space">    </span>color: var(--cream);<br>
+<span class="Apple-converted-space">    </span>letter-spacing: -0.5px;<br>
+<span class="Apple-converted-space">    </span>line-height: 1;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.app-subtitle {<br>
+<span class="Apple-converted-space">    </span>font-size: 10px;<br>
+<span class="Apple-converted-space">    </span>color: var(--amber);<br>
+<span class="Apple-converted-space">    </span>letter-spacing: 3px;<br>
+<span class="Apple-converted-space">    </span>text-transform: uppercase;<br>
+<span class="Apple-converted-space">    </span>margin-top: 3px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.date-badge {<br>
+<span class="Apple-converted-space">    </span>text-align: right;<br>
+<span class="Apple-converted-space">    </span>font-size: 10px;<br>
+<span class="Apple-converted-space">    </span>color: var(--muted);<br>
+<span class="Apple-converted-space">    </span>line-height: 1.6;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.date-badge span { color: var(--amber); font-weight: 600; }<br>
+<span class="Apple-converted-space">  </span>/* Hopper horizon line — the signature element */<br>
+<span class="Apple-converted-space">  </span>.horizon-line {<br>
+<span class="Apple-converted-space">    </span>height: 2px;<br>
+<span class="Apple-converted-space">    </span>background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--teal) 60%, transparent);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 0;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>/* NAV */<br>
+<span class="Apple-converted-space">  </span>.bottom-nav {<br>
+<span class="Apple-converted-space">    </span>position: fixed;<br>
+<span class="Apple-converted-space">    </span>bottom: 0;<br>
+<span class="Apple-converted-space">    </span>left: 0; right: 0;<br>
+<span class="Apple-converted-space">    </span>background: var(--navy2);<br>
+<span class="Apple-converted-space">    </span>border-top: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>display: flex;<br>
+<span class="Apple-converted-space">    </span>padding-bottom: var(--safe-bottom);<br>
+<span class="Apple-converted-space">    </span>z-index: 200;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.nav-btn {<br>
+<span class="Apple-converted-space">    </span>flex: 1;<br>
+<span class="Apple-converted-space">    </span>display: flex;<br>
+<span class="Apple-converted-space">    </span>flex-direction: column;<br>
+<span class="Apple-converted-space">    </span>align-items: center;<br>
+<span class="Apple-converted-space">    </span>padding: 10px 4px 8px;<br>
+<span class="Apple-converted-space">    </span>background: none;<br>
+<span class="Apple-converted-space">    </span>border: none;<br>
+<span class="Apple-converted-space">    </span>color: var(--muted);<br>
+<span class="Apple-converted-space">    </span>font-size: 9px;<br>
+<span class="Apple-converted-space">    </span>letter-spacing: 1px;<br>
+<span class="Apple-converted-space">    </span>text-transform: uppercase;<br>
+<span class="Apple-converted-space">    </span>cursor: pointer;<br>
+<span class="Apple-converted-space">    </span>transition: color 0.2s;<br>
+<span class="Apple-converted-space">    </span>gap: 4px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.nav-btn.active { color: var(--amber); }<br>
+<span class="Apple-converted-space">  </span>.nav-icon { font-size: 18px; line-height: 1; }<br>
+<span class="Apple-converted-space">  </span>/* PAGES */<br>
+<span class="Apple-converted-space">  </span>.page { display: none; padding: 16px; }<br>
+<span class="Apple-converted-space">  </span>.page.active { display: block; }<br>
+<span class="Apple-converted-space">  </span>/* CARDS */<br>
+<span class="Apple-converted-space">  </span>.card {<br>
+<span class="Apple-converted-space">    </span>background: var(--card);<br>
+<span class="Apple-converted-space">    </span>border-radius: 12px;<br>
+<span class="Apple-converted-space">    </span>border: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>padding: 16px;<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 12px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.card-amber { border-left: 3px solid var(--amber); }<br>
+<span class="Apple-converted-space">  </span>.card-teal { border-left: 3px solid var(--teal); }<br>
+<span class="Apple-converted-space">  </span>.card-red { border-left: 3px solid var(--red); }<br>
+<span class="Apple-converted-space">  </span>.card-green { border-left: 3px solid var(--green); }<br>
+<span class="Apple-converted-space">  </span>.section-label {<br>
+<span class="Apple-converted-space">    </span>font-size: 9px;<br>
+<span class="Apple-converted-space">    </span>letter-spacing: 3px;<br>
+<span class="Apple-converted-space">    </span>text-transform: uppercase;<br>
+<span class="Apple-converted-space">    </span>color: var(--amber);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 12px;<br>
+<span class="Apple-converted-space">    </span>font-weight: 600;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.serif { font-family: 'Playfair Display', serif; }<br>
+<span class="Apple-converted-space">  </span>/* TODAY PANEL */<br>
+<span class="Apple-converted-space">  </span>.today-verse {<br>
+<span class="Apple-converted-space">    </span>font-family: 'Playfair Display', serif;<br>
+<span class="Apple-converted-space">    </span>font-size: 16px;<br>
+<span class="Apple-converted-space">    </span>font-style: italic;<br>
+<span class="Apple-converted-space">    </span>line-height: 1.7;<br>
+<span class="Apple-converted-space">    </span>color: var(--cream);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 8px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.verse-ref {<br>
+<span class="Apple-converted-space">    </span>font-size: 11px;<br>
+<span class="Apple-converted-space">    </span>color: var(--amber);<br>
+<span class="Apple-converted-space">    </span>letter-spacing: 1px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>/* MACRO GRID */<br>
+<span class="Apple-converted-space">  </span>.macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }<br>
+<span class="Apple-converted-space">  </span>.macro-card {<br>
+<span class="Apple-converted-space">    </span>background: var(--card2);<br>
+<span class="Apple-converted-space">    </span>border-radius: 10px;<br>
+<span class="Apple-converted-space">    </span>padding: 12px;<br>
+<span class="Apple-converted-space">    </span>border: 1px solid var(--border);<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.macro-label { font-size: 9px; letter-spacing: 2px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }<br>
+<span class="Apple-converted-space">  </span>.macro-value { font-size: 26px; font-weight: 800; line-height: 1; }<br>
+<span class="Apple-converted-space">  </span>.macro-unit { font-size: 10px; color: var(--muted); margin-top: 2px; }<br>
+<span class="Apple-converted-space">  </span>/* WEEK PILLS */<br>
+<span class="Apple-converted-space">  </span>.week-scroller { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }<br>
+<span class="Apple-converted-space">  </span>.week-scroller::-webkit-scrollbar { display: none; }<br>
+<span class="Apple-converted-space">  </span>.week-pill {<br>
+<span class="Apple-converted-space">    </span>flex-shrink: 0;<br>
+<span class="Apple-converted-space">    </span>width: 38px; height: 38px;<br>
+<span class="Apple-converted-space">    </span>border-radius: 10px;<br>
+<span class="Apple-converted-space">    </span>border: 1.5px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>background: var(--card);<br>
+<span class="Apple-converted-space">    </span>color: var(--muted);<br>
+<span class="Apple-converted-space">    </span>font-weight: 700;<br>
+<span class="Apple-converted-space">    </span>font-size: 13px;<br>
+<span class="Apple-converted-space">    </span>cursor: pointer;<br>
+<span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;<br>
+<span class="Apple-converted-space">    </span>transition: all 0.15s;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.week-pill.active { background: var(--amber); color: #000; border-color: var(--amber); }<br>
+<span class="Apple-converted-space">  </span>/* DAY ROWS */<br>
+<span class="Apple-converted-space">  </span>.day-row {<br>
+<span class="Apple-converted-space">    </span>background: var(--card);<br>
+<span class="Apple-converted-space">    </span>border-radius: 10px;<br>
+<span class="Apple-converted-space">    </span>border: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 8px;<br>
+<span class="Apple-converted-space">    </span>overflow: hidden;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.day-header {<br>
+<span class="Apple-converted-space">    </span>display: flex;<br>
+<span class="Apple-converted-space">    </span>align-items: center;<br>
+<span class="Apple-converted-space">    </span>gap: 12px;<br>
+<span class="Apple-converted-space">    </span>padding: 12px 14px;<br>
+<span class="Apple-converted-space">    </span>cursor: pointer;<br>
+<span class="Apple-converted-space">    </span>width: 100%;<br>
+<span class="Apple-converted-space">    </span>background: none;<br>
+<span class="Apple-converted-space">    </span>border: none;<br>
+<span class="Apple-converted-space">    </span>text-align: left;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.day-tag {<br>
+<span class="Apple-converted-space">    </span>flex-shrink: 0;<br>
+<span class="Apple-converted-space">    </span>padding: 4px 8px;<br>
+<span class="Apple-converted-space">    </span>border-radius: 6px;<br>
+<span class="Apple-converted-space">    </span>font-size: 11px;<br>
+<span class="Apple-converted-space">    </span>font-weight: 800;<br>
+<span class="Apple-converted-space">    </span>letter-spacing: 0.5px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.tag-strength { background: var(--amber); color: #000; }<br>
+<span class="Apple-converted-space">  </span>.tag-cardio { background: var(--teal); color: #000; }<br>
+<span class="Apple-converted-space">  </span>.tag-rest { background: var(--steel); color: var(--cream); }<br>
+<span class="Apple-converted-space">  </span>.day-title { font-size: 13px; font-weight: 700; color: var(--cream); }<br>
+<span class="Apple-converted-space">  </span>.day-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }<br>
+<span class="Apple-converted-space">  </span>.day-chevron { margin-left: auto; color: var(--amber); font-size: 16px; transition: transform 0.2s; }<br>
+<span class="Apple-converted-space">  </span>.day-chevron.open { transform: rotate(90deg); }<br>
+<span class="Apple-converted-space">  </span>.day-body { padding: 0 14px 14px; border-top: 1px solid var(--border); display: none; }<br>
+<span class="Apple-converted-space">  </span>.day-body.open { display: block; }<br>
+<span class="Apple-converted-space">  </span>.day-note { font-size: 11px; color: var(--muted); padding: 10px 0 8px; line-height: 1.6; }<br>
+<span class="Apple-converted-space">  </span>.exercise-group { margin-top: 10px; }<br>
+<span class="Apple-converted-space">  </span>.ex-group-label { font-size: 9px; color: var(--amber); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }<br>
+<span class="Apple-converted-space">  </span>.ex-option { display: flex; gap: 8px; margin-bottom: 5px; align-items: flex-start; }<br>
+<span class="Apple-converted-space">  </span>.ex-star { color: var(--amber); font-size: 11px; flex-shrink: 0; margin-top: 2px; }<br>
+<span class="Apple-converted-space">  </span>.ex-text { font-size: 12px; line-height: 1.4; }<br>
+<span class="Apple-converted-space">  </span>.ex-text.primary { color: var(--cream); }<br>
+<span class="Apple-converted-space">  </span>.ex-text.alt { color: var(--muted); }<br>
+<span class="Apple-converted-space">  </span>.cardio-box {<br>
+<span class="Apple-converted-space">    </span>background: #0d1a18;<br>
+<span class="Apple-converted-space">    </span>border-left: 3px solid var(--teal);<br>
+<span class="Apple-converted-space">    </span>border-radius: 8px;<br>
+<span class="Apple-converted-space">    </span>padding: 12px;<br>
+<span class="Apple-converted-space">    </span>margin-top: 10px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.cardio-title { color: var(--teal); font-weight: 700; font-size: 13px; margin-bottom: 8px; }<br>
+<span class="Apple-converted-space">  </span>.cardio-row { font-size: 12px; color: var(--cream); margin-bottom: 4px; }<br>
+<span class="Apple-converted-space">  </span>.cardio-loc { font-size: 11px; color: var(--muted); }<br>
+<span class="Apple-converted-space">  </span>/* WEEK THEME CARD */<br>
+<span class="Apple-converted-space">  </span>.week-theme {<br>
+<span class="Apple-converted-space">    </span>background: var(--card);<br>
+<span class="Apple-converted-space">    </span>border-radius: 10px;<br>
+<span class="Apple-converted-space">    </span>border: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>padding: 14px;<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 12px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.week-name { color: var(--amber); font-weight: 800; font-size: 13px; margin-bottom: 4px; }<br>
+<span class="Apple-converted-space">  </span>.week-desc { font-size: 12px; color: var(--cream); line-height: 1.5; margin-bottom: 8px; }<br>
+<span class="Apple-converted-space">  </span>.hume-box { background: #1a1500; border-radius: 6px; padding: 8px 10px; border-left: 3px solid var(--amber); }<br>
+<span class="Apple-converted-space">  </span>.hume-label { font-size: 9px; color: var(--amber); letter-spacing: 2px; margin-bottom: 2px; }<br>
+<span class="Apple-converted-space">  </span>.hume-text { font-size: 11px; color: var(--cream); line-height: 1.4; }<br>
+<span class="Apple-converted-space">  </span>/* REHAB SECTION */<br>
+<span class="Apple-converted-space">  </span>.verse-card {<br>
+<span class="Apple-converted-space">    </span>background: var(--card);<br>
+<span class="Apple-converted-space">    </span>border-radius: 12px;<br>
+<span class="Apple-converted-space">    </span>border: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>padding: 18px;<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 12px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.verse-category {<br>
+<span class="Apple-converted-space">    </span>font-size: 9px;<br>
+<span class="Apple-converted-space">    </span>letter-spacing: 3px;<br>
+<span class="Apple-converted-space">    </span>text-transform: uppercase;<br>
+<span class="Apple-converted-space">    </span>color: var(--teal);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 10px;<br>
+<span class="Apple-converted-space">    </span>font-weight: 600;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.verse-text {<br>
+<span class="Apple-converted-space">    </span>font-family: 'Playfair Display', serif;<br>
+<span class="Apple-converted-space">    </span>font-size: 15px;<br>
+<span class="Apple-converted-space">    </span>font-style: italic;<br>
+<span class="Apple-converted-space">    </span>line-height: 1.75;<br>
+<span class="Apple-converted-space">    </span>color: var(--cream);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 8px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.verse-citation { font-size: 11px; color: var(--amber); letter-spacing: 1px; }<br>
+<span class="Apple-converted-space">  </span>.verse-reflection { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }<br>
+<span class="Apple-converted-space">  </span>/* AUGUSTINE */<br>
+<span class="Apple-converted-space">  </span>.augustine-card {<br>
+<span class="Apple-converted-space">    </span>background: var(--card);<br>
+<span class="Apple-converted-space">    </span>border-radius: 12px;<br>
+<span class="Apple-converted-space">    </span>border: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>padding: 18px;<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 12px;<br>
+<span class="Apple-converted-space">    </span>border-top: 2px solid var(--amber);<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.aug-label { font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 10px; }<br>
+<span class="Apple-converted-space">  </span>.aug-text {<br>
+<span class="Apple-converted-space">    </span>font-family: 'Playfair Display', serif;<br>
+<span class="Apple-converted-space">    </span>font-size: 14px;<br>
+<span class="Apple-converted-space">    </span>font-style: italic;<br>
+<span class="Apple-converted-space">    </span>line-height: 1.8;<br>
+<span class="Apple-converted-space">    </span>color: var(--cream);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 8px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.aug-source { font-size: 10px; color: var(--muted); margin-bottom: 10px; }<br>
+<span class="Apple-converted-space">  </span>.aug-reflection { font-size: 12px; color: var(--muted); line-height: 1.6; }<br>
+<span class="Apple-converted-space">  </span>/* MOTIVATION */<br>
+<span class="Apple-converted-space">  </span>.motive-card {<br>
+<span class="Apple-converted-space">    </span>background: var(--card);<br>
+<span class="Apple-converted-space">    </span>border-radius: 12px;<br>
+<span class="Apple-converted-space">    </span>border: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>padding: 18px;<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 12px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.motive-tag { font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 10px; }<br>
+<span class="Apple-converted-space">  </span>.motive-quote {<br>
+<span class="Apple-converted-space">    </span>font-family: 'Playfair Display', serif;<br>
+<span class="Apple-converted-space">    </span>font-size: 16px;<br>
+<span class="Apple-converted-space">    </span>line-height: 1.65;<br>
+<span class="Apple-converted-space">    </span>color: var(--cream);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 6px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.motive-attr { font-size: 11px; color: var(--amber); }<br>
+<span class="Apple-converted-space">  </span>.motive-body { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }<br>
+<span class="Apple-converted-space">  </span>/* NOTIFICATION GUIDE */<br>
+<span class="Apple-converted-space">  </span>.step-row { display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; }<br>
+<span class="Apple-converted-space">  </span>.step-num {<br>
+<span class="Apple-converted-space">    </span>flex-shrink: 0;<br>
+<span class="Apple-converted-space">    </span>width: 26px; height: 26px;<br>
+<span class="Apple-converted-space">    </span>border-radius: 50%;<br>
+<span class="Apple-converted-space">    </span>background: var(--amber);<br>
+<span class="Apple-converted-space">    </span>color: #000;<br>
+<span class="Apple-converted-space">    </span>font-weight: 800;<br>
+<span class="Apple-converted-space">    </span>font-size: 12px;<br>
+<span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.step-text { font-size: 12px; color: var(--cream); line-height: 1.6; }<br>
+<span class="Apple-converted-space">  </span>.step-text code {<br>
+<span class="Apple-converted-space">    </span>background: var(--steel);<br>
+<span class="Apple-converted-space">    </span>padding: 1px 6px;<br>
+<span class="Apple-converted-space">    </span>border-radius: 4px;<br>
+<span class="Apple-converted-space">    </span>font-size: 11px;<br>
+<span class="Apple-converted-space">    </span>color: var(--teal);<br>
+<span class="Apple-converted-space">    </span>font-family: monospace;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>/* SUPP TABLE */<br>
+<span class="Apple-converted-space">  </span>.supp-row {<br>
+<span class="Apple-converted-space">    </span>display: flex;<br>
+<span class="Apple-converted-space">    </span>justify-content: space-between;<br>
+<span class="Apple-converted-space">    </span>align-items: flex-start;<br>
+<span class="Apple-converted-space">    </span>padding: 12px 0;<br>
+<span class="Apple-converted-space">    </span>border-bottom: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>gap: 8px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.supp-row:last-child { border-bottom: none; }<br>
+<span class="Apple-converted-space">  </span>.supp-name { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 3px; }<br>
+<span class="Apple-converted-space">  </span>.supp-timing { font-size: 11px; color: var(--muted); }<br>
+<span class="Apple-converted-space">  </span>.supp-dose { font-size: 12px; color: var(--amber); font-weight: 700; flex-shrink: 0; }<br>
+<span class="Apple-converted-space">  </span>/* FAITH INTRO */<br>
+<span class="Apple-converted-space">  </span>.faith-hero {<br>
+<span class="Apple-converted-space">    </span>background: linear-gradient(135deg, #0d1520 0%, #0a0e1a 100%);<br>
+<span class="Apple-converted-space">    </span>border-radius: 12px;<br>
+<span class="Apple-converted-space">    </span>border: 1px solid var(--border);<br>
+<span class="Apple-converted-space">    </span>padding: 20px;<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 16px;<br>
+<span class="Apple-converted-space">    </span>text-align: center;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.cross { font-size: 32px; margin-bottom: 10px; }<br>
+<span class="Apple-converted-space">  </span>.faith-title {<br>
+<span class="Apple-converted-space">    </span>font-family: 'Playfair Display', serif;<br>
+<span class="Apple-converted-space">    </span>font-size: 20px;<br>
+<span class="Apple-converted-space">    </span>color: var(--cream);<br>
+<span class="Apple-converted-space">    </span>margin-bottom: 6px;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.faith-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }<br>
+<span class="Apple-converted-space">  </span>/* ACCORDION */<br>
+<span class="Apple-converted-space">  </span>.accordion-btn {<br>
+<span class="Apple-converted-space">    </span>width: 100%;<br>
+<span class="Apple-converted-space">    </span>background: none;<br>
+<span class="Apple-converted-space">    </span>border: none;<br>
+<span class="Apple-converted-space">    </span>padding: 14px 16px;<br>
+<span class="Apple-converted-space">    </span>display: flex;<br>
+<span class="Apple-converted-space">    </span>justify-content: space-between;<br>
+<span class="Apple-converted-space">    </span>align-items: center;<br>
+<span class="Apple-converted-space">    </span>cursor: pointer;<br>
+<span class="Apple-converted-space">    </span>text-align: left;<br>
+<span class="Apple-converted-space">  </span>}<br>
+<span class="Apple-converted-space">  </span>.accordion-label { font-size: 13px; font-weight: 600; color: var(--cream); }<br>
+<span class="Apple-converted-space">  </span>.accordion-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }<br>
+<span class="Apple-converted-space">  </span>.accordion-arrow { color: var(--amber); font-size: 14px; transition: transform 0.2s; flex-shrink: 0; }<br>
+<span class="Apple-converted-space">  </span>.accordion-arrow.open { transform: rotate(90deg); }<br>
+<span class="Apple-converted-space">  </span>.accordion-body { display: none; padding: 0 16px 16px; }<br>
+<span class="Apple-converted-space">  </span>.accordion-body.open { display: block; }<br>
+&lt;/style&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!-- HEADER --&gt;<br>
+&lt;div class="app-header"&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="header-top"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="app-title"&gt;Project Nighthawk&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="app-subtitle"&gt;Nick Charpentier · July 7, 2026&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="date-badge" id="dateBadge"&gt;<br>
+<span class="Apple-converted-space">      </span>Loading...&lt;br/&gt;&lt;span&gt;Day 1&lt;/span&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="horizon-line"&gt;&lt;/div&gt;<br>
+&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!-- BOTTOM NAV --&gt;<br>
+&lt;div class="bottom-nav"&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;button class="nav-btn active" onclick="showPage('today')" id="nav-today"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;span class="nav-icon"&gt;⚡&lt;/span&gt;TODAY<br>
+<span class="Apple-converted-space">  </span>&lt;/button&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;button class="nav-btn" onclick="showPage('plan')" id="nav-plan"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;span class="nav-icon"&gt;📋&lt;/span&gt;PLAN<br>
+<span class="Apple-converted-space">  </span>&lt;/button&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;button class="nav-btn" onclick="showPage('rehab')" id="nav-rehab"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;span class="nav-icon"&gt;✝️&lt;/span&gt;REHAB<br>
+<span class="Apple-converted-space">  </span>&lt;/button&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;button class="nav-btn" onclick="showPage('fuel')" id="nav-fuel"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;span class="nav-icon"&gt;🥗&lt;/span&gt;FUEL<br>
+<span class="Apple-converted-space">  </span>&lt;/button&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;button class="nav-btn" onclick="showPage('notify')" id="nav-notify"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;span class="nav-icon"&gt;🔔&lt;/span&gt;ALERTS<br>
+<span class="Apple-converted-space">  </span>&lt;/button&gt;<br>
+&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!-- ═══════════════ TODAY PAGE ═══════════════ --&gt;<br>
+&lt;div class="page active" id="page-today"&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Daily Verse --&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="card card-teal"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label"&gt;Today's Word&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="today-verse" id="todayVerse"&gt;Loading...&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-ref" id="todayVerseRef"&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Daily Motivation --&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="card card-amber"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label"&gt;Daily Fire&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="today-verse" id="todayMotive" style="font-size:14px;"&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-ref" id="todayMotiveAttr" style="margin-top:6px;"&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Today's Workout --&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label"&gt;Today's Training&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div id="todayWorkout"&gt;Loading...&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Quick Stats --&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="section-label" style="padding: 0 4px;"&gt;Daily Targets&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="macro-grid"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="macro-card"&gt;&lt;div class="macro-label"&gt;Calories&lt;/div&gt;&lt;div class="macro-value" style="color:var(--amber)"&gt;3,400&lt;/div&gt;&lt;div class="macro-unit"&gt;kcal&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="macro-card"&gt;&lt;div class="macro-label"&gt;Protein&lt;/div&gt;&lt;div class="macro-value" style="color:var(--green)"&gt;210g&lt;/div&gt;&lt;div class="macro-unit"&gt;minimum&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="macro-card"&gt;&lt;div class="macro-label"&gt;Creatine&lt;/div&gt;&lt;div class="macro-value" style="color:var(--teal)"&gt;5g&lt;/div&gt;&lt;div class="macro-unit"&gt;daily&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="macro-card"&gt;&lt;div class="macro-label"&gt;Water&lt;/div&gt;&lt;div class="macro-value" style="color:#6ab0e8"&gt;1 gal&lt;/div&gt;&lt;div class="macro-unit"&gt;minimum&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!-- ═══════════════ PLAN PAGE ═══════════════ --&gt;<br>
+&lt;div class="page" id="page-plan"&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="section-label"&gt;8-Week Program&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="week-scroller" id="weekScroller"&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div id="weekContent"&gt;&lt;/div&gt;<br>
+&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!-- ═══════════════ REHAB PAGE ═══════════════ --&gt;<br>
+&lt;div class="page" id="page-rehab"&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="faith-hero"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="cross"&gt;✝&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="faith-title"&gt;REHAB&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="faith-sub"&gt;Honoring God through the body He gave you.&lt;br/&gt;Faith, discipline, and peace through the fire.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Bible Verses — Body as Temple --&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="section-label"&gt;The Body is a Temple&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="verse-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-category"&gt;On Physical Discipline&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-text"&gt;"Do you not know that your body is a temple of the Holy Spirit within you, which you have from God, and that you are not your own? For you were bought with a price; therefore glorify God in your body."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-citation"&gt;1 Corinthians 6:19–20&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-reflection"&gt;Every rep, every mile, every clean meal is an act of worship. You are not destroying a habit — you are reclaiming a temple. God gave you that 6'4" frame and those genetics for a reason. Steward them.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="verse-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-category"&gt;On Temptation&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-text"&gt;"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-citation"&gt;1 Corinthians 10:13&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-reflection"&gt;The craving for nicotine at 2pm is not unique to you. Every man who has ever quit has felt exactly what you feel right now. God has already built the exit ramp. You just have to take it.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="verse-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-category"&gt;On Anxiety &amp;amp; Withdrawal&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-text"&gt;"Have no anxiety at all, but in everything, by prayer and petition, with thanksgiving, make your requests known to God. Then the peace of God that surpasses all understanding will guard your hearts and minds in Christ Jesus."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-citation"&gt;Philippians 4:6–7&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-reflection"&gt;Withdrawal is anxiety in the body. When it rises — stop, breathe, pray. Not as weakness. As the most disciplined thing a man can do. The peace that follows is not chemical. It is something else entirely.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="verse-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-category"&gt;On Perseverance&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-text"&gt;"I can do all things through Christ who strengthens me."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-citation"&gt;Philippians 4:13&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-reflection"&gt;Not a bumper sticker. A statement made by a man writing from prison, who had been beaten, shipwrecked, and starved. If Paul could have peace in chains, you can get through day three without a pouch.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="verse-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-category"&gt;On Discipline&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-text"&gt;"Every athlete exercises discipline in every way. They do it to win a perishable crown, but we an imperishable one. Thus I do not run aimlessly; I do not fight as if I were shadowboxing. No, I drive my body and train it."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-citation"&gt;1 Corinthians 9:25–27&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-reflection"&gt;Paul is describing an athlete's mindset two thousand years before sport psychology existed. You trained for football. You know what discipline costs. This is the same thing — with an eternal prize.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="verse-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-category"&gt;On the Man You're Becoming&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-text"&gt;"Finally, brothers, whatever is true, whatever is honorable, whatever is just, whatever is pure, whatever is lovely, whatever is gracious — if there is any excellence and if there is anything worthy of praise, think about these things."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-citation"&gt;Philippians 4:8&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="verse-reflection"&gt;This is your mental diet. What you feed your mind shapes what you become. The man she sees — the man your faith calls you to be — is built in moments like this one, when no one is watching.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Augustine --&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="section-label" style="margin-top:8px;"&gt;Augustine — Confessions&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="augustine-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-label"&gt;✦ Confessions — Book I&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-text"&gt;"Thou madest us for Thyself, and our heart is restless, until it repose in Thee."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-source"&gt;Saint Augustine, Confessions, Book I, Chapter 1&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-reflection"&gt;Augustine wrote this after years of chasing pleasure, ambition, and sin — and finding each one hollow. The restlessness you feel when you put down the pouch and don't know what to do with your hands? That is not withdrawal. That is your soul looking for something real. Give it something real.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="augustine-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-label"&gt;✦ Confessions — Book VIII&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-text"&gt;"I was bound, not with another's irons, but by my own iron will. My will the enemy held, and thence had made a chain for me, and bound me. For of a forward will, was a lust made; and a lust served, became custom; and custom not resisted, became necessity."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-source"&gt;Saint Augustine, Confessions, Book VIII, Chapter 5&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-reflection"&gt;Augustine describing his own addiction — to lust, to habit, to the comfortable chains we choose. He is describing nicotine. He is describing weed. He wrote this sixteen centuries ago. The chains are the same. So is the way out: not willpower alone, but surrendering the will to something greater.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="augustine-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-label"&gt;✦ Confessions — Book X&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-text"&gt;"Our heart is restless until it rests in You. Late have I loved you, O Beauty ever ancient, ever new, late have I loved you! You were within me, but I was outside, and it was there that I searched for you."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-source"&gt;Saint Augustine, Confessions, Book X, Chapter 27&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="aug-reflection"&gt;He searched everywhere — pleasure, intellect, status — before finding what was already within him. You are 22. Augustine was 32 when he converted. You are not late. You are early. This is the best possible time to build your foundation.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Catholic Stoic Motivation --&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="section-label" style="margin-top:8px;"&gt;Faith &amp;amp; Stoic Discipline&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="motive-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-tag"&gt;Marcus Aurelius · Meditations&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-quote"&gt;"You have power over your mind, not outside events. Realize this, and you will find strength."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-attr"&gt;— Marcus Aurelius, Emperor of Rome&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-body"&gt;A pagan emperor who never knew Christ, yet lived a life of radical self-discipline and duty. The Stoics and the Church Fathers read each other. Thomas Aquinas built his moral theology in conversation with Aristotle. You can honor Marcus and honor God — they both call you to master yourself before you can serve others. The craving does not control you. You do.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="motive-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-tag"&gt;Thomas Aquinas · On Virtue&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-quote"&gt;"The things that we love tell us what we are."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-attr"&gt;— Saint Thomas Aquinas&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-body"&gt;What do you love? Football. Faith. Her. The man you used to be in that mirror. Let those things tell you who you are — not a pouch, not a habit, not comfort. Aquinas taught that virtue is not the absence of desire but the ordering of desire toward what is truly good. Order your desires. Train them like you trained on the field.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="motive-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-tag"&gt;On Leading Her Home&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-quote"&gt;"The soul that loves God has no need for anything else."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-attr"&gt;— Saint John of the Cross&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-body"&gt;She is Lutheran. She loves Christ. That is the foundation. What she needs to see is not an argument — it is a man. A man whose faith is visible in how he treats his body, keeps his word, disciplines his habits, and loves with patience. Monica prayed for Augustine for thirty years. The witness of a life is louder than any theology debate. Be the witness. Let the rest belong to God.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="motive-card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-tag"&gt;On This Exact Moment&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-quote"&gt;"Do not be overcome by evil, but overcome evil with good."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-attr"&gt;— Romans 12:21&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="motive-body"&gt;The craving is real. The discomfort is real. And your response to it — right now, in this moment — is the formation of your character. Every time you choose the run over the pouch, the prayer over the panic, the discipline over the comfort, you are becoming the man God designed at 6'4" with a heart that can carry more than weight plates.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!-- ═══════════════ FUEL PAGE ═══════════════ --&gt;<br>
+&lt;div class="page" id="page-fuel"&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="section-label"&gt;Nutrition Protocol&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="macro-grid"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="macro-card"&gt;&lt;div class="macro-label"&gt;Calories&lt;/div&gt;&lt;div class="macro-value" style="color:var(--amber)"&gt;3,400&lt;/div&gt;&lt;div class="macro-unit"&gt;kcal/day&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="macro-card"&gt;&lt;div class="macro-label"&gt;Protein&lt;/div&gt;&lt;div class="macro-value" style="color:var(--green)"&gt;210&lt;/div&gt;&lt;div class="macro-unit"&gt;grams&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="macro-card"&gt;&lt;div class="macro-label"&gt;Carbs&lt;/div&gt;&lt;div class="macro-value" style="color:#6ab0e8"&gt;380&lt;/div&gt;&lt;div class="macro-unit"&gt;grams&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="macro-card"&gt;&lt;div class="macro-label"&gt;Fat&lt;/div&gt;&lt;div class="macro-value" style="color:#e8a84e"&gt;100&lt;/div&gt;&lt;div class="macro-unit"&gt;grams&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card card-amber"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label"&gt;⚡ Creatine Protocol&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div style="font-size:32px;font-weight:800;color:var(--amber);margin-bottom:4px;"&gt;5g daily&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div style="font-size:12px;color:var(--muted);line-height:1.6;"&gt;Any time of day. Mix in water or shake. No loading phase needed. Take every single day — even rest days. Results compound over 4–6 weeks.&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label"&gt;Meal Blueprint&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div style="display:flex;flex-direction:column;gap:10px;"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;"&gt;BREAKFAST&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:12px;color:var(--cream);line-height:1.5;"&gt;4 eggs + 2 egg whites · Oats with banana · Greek yogurt (plain) · Coffee&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="border-top:1px solid var(--border);padding-top:10px;"&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;"&gt;LUNCH&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:12px;color:var(--cream);line-height:1.5;"&gt;Ground beef or chicken rice bowl · Sweet potato · Broccoli or mixed greens&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="border-top:1px solid var(--border);padding-top:10px;"&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;"&gt;PRE-WORKOUT&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:12px;color:var(--cream);line-height:1.5;"&gt;Rice cakes + peanut butter · Protein shake · 60–90 min before training&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="border-top:1px solid var(--border);padding-top:10px;"&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;"&gt;POST-WORKOUT&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:12px;color:var(--cream);line-height:1.5;"&gt;50g protein shake · Apple · Handful almonds · Within 45 min&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="border-top:1px solid var(--border);padding-top:10px;"&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;"&gt;DINNER&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:12px;color:var(--cream);line-height:1.5;"&gt;Salmon or steak · White rice · Roasted vegetables&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="border-top:1px solid var(--border);padding-top:10px;"&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;"&gt;BEFORE BED&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div style="font-size:12px;color:var(--cream);line-height:1.5;"&gt;Cottage cheese or casein shake · Slow-digesting protein feeds overnight muscle repair&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card card-teal"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label"&gt;✈️ Travel Week Strategy&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div style="font-size:12px;color:var(--cream);line-height:1.7;"&gt;<br>
+<span class="Apple-converted-space">      </span>Hit protein first — calories are secondary priority on travel days.&lt;br/&gt;&lt;br/&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;strong style="color:var(--teal);"&gt;Hotel breakfast:&lt;/strong&gt; Eggs + protein shake. Always.&lt;br/&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;strong style="color:var(--teal);"&gt;Pack:&lt;/strong&gt; Individual creatine packets + protein bars.&lt;br/&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;strong style="color:var(--teal);"&gt;Chipotle play:&lt;/strong&gt; Double protein bowl = ~65g protein and fits macros perfectly.&lt;br/&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;strong style="color:var(--teal);"&gt;Hotel gym:&lt;/strong&gt; Dumbbells + bodyweight. The plan has hotel-safe days built in.<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="section-label"&gt;Supplement Stack&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="supp-row"&gt;&lt;div&gt;&lt;div class="supp-name"&gt;Creatine Monohydrate&lt;/div&gt;&lt;div class="supp-timing"&gt;Anytime · daily · non-negotiable&lt;/div&gt;&lt;/div&gt;&lt;div class="supp-dose"&gt;5g&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="supp-row"&gt;&lt;div&gt;&lt;div class="supp-name"&gt;Whey Protein&lt;/div&gt;&lt;div class="supp-timing"&gt;Post-workout + as needed&lt;/div&gt;&lt;/div&gt;&lt;div class="supp-dose"&gt;1–2 scoops&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="supp-row"&gt;&lt;div&gt;&lt;div class="supp-name"&gt;Vitamin D3&lt;/div&gt;&lt;div class="supp-timing"&gt;Morning with food · ~$8/mo&lt;/div&gt;&lt;/div&gt;&lt;div class="supp-dose"&gt;3,000 IU&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="supp-row"&gt;&lt;div&gt;&lt;div class="supp-name"&gt;Fish Oil&lt;/div&gt;&lt;div class="supp-timing"&gt;With meals · ~$12/mo&lt;/div&gt;&lt;/div&gt;&lt;div class="supp-dose"&gt;2–3g&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="supp-row"&gt;&lt;div&gt;&lt;div class="supp-name"&gt;Magnesium Glycinate&lt;/div&gt;&lt;div class="supp-timing"&gt;Before bed — improves sleep + recovery&lt;/div&gt;&lt;/div&gt;&lt;div class="supp-dose"&gt;400mg&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card" style="border-left: 3px solid var(--red);"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label" style="color:var(--red);"&gt;Skip These&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div style="font-size:12px;color:var(--muted);line-height:1.8;"&gt;<br>
+<span class="Apple-converted-space">      </span>✕ Pre-workout blends — use coffee + creatine&lt;br/&gt;<br>
+<span class="Apple-converted-space">      </span>✕ Fat burners — unnecessary at your BF%&lt;br/&gt;<br>
+<span class="Apple-converted-space">      </span>✕ BCAAs — redundant at 210g protein&lt;br/&gt;<br>
+<span class="Apple-converted-space">      </span>✕ Testosterone boosters — you're 22, your T is fine<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;<br>
+&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!-- ═══════════════ ALERTS PAGE ═══════════════ --&gt;<br>
+&lt;div class="page" id="page-notify"&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div class="section-label"&gt;Daily 5PM Alert Setup&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card card-amber" style="margin-bottom:16px;"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--cream);line-height:1.6;margin-bottom:6px;"&gt;"The secret of your future is hidden in your daily routine."&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div style="font-size:11px;color:var(--amber);"&gt;— Mike Murdock&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label"&gt;iPhone Shortcut Setup — 5 Steps&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;1&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;Open the &lt;strong&gt;Shortcuts&lt;/strong&gt; app on your iPhone (comes pre-installed).&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;2&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;Tap &lt;strong&gt;Automation&lt;/strong&gt; at the bottom → tap &lt;code&gt;+&lt;/code&gt; → tap &lt;strong&gt;Time of Day&lt;/strong&gt;.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;3&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;Set time to &lt;code&gt;5:00 PM&lt;/code&gt; · Repeat: &lt;strong&gt;Daily&lt;/strong&gt; · Run after confirming: &lt;strong&gt;Off&lt;/strong&gt;.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;4&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;Tap &lt;strong&gt;New Blank Automation&lt;/strong&gt; → search for &lt;code&gt;Show Notification&lt;/code&gt; → add action.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;5&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;In the notification body, paste one of the messages below. Tap &lt;strong&gt;Done&lt;/strong&gt;. You're live.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="section-label"&gt;Paste-Ready 5PM Messages&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;div style="display:flex;flex-direction:column;gap:10px;"&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;"&gt;TAP TO COPY · MONDAY&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:13px;color:var(--cream);line-height:1.6;"&gt;🏈 Nighthawk — 5PM check. You played football at UWEC. You carried a canoe through the BWCA. A nicotine craving is not your ceiling. Hit the gym. &lt;em&gt;"I can do all things through Christ who strengthens me."&lt;/em&gt; — Phil 4:13&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;"&gt;TAP TO COPY · TUESDAY&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:13px;color:var(--cream);line-height:1.6;"&gt;🏃 Nighthawk — Run day. Augustine quit his habits cold. Marcus Aurelius governed an empire on discipline alone. You're quitting a pouch. Lace up. You are built for more than comfort.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;"&gt;TAP TO COPY · WEDNESDAY&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:13px;color:var(--cream);line-height:1.6;"&gt;✝️ Nighthawk — Mid-week. She's watching who you're becoming, even when you don't notice. Be the man your faith calls you to be — not someday, tonight. Train. Pray. Rest clean.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;"&gt;TAP TO COPY · THURSDAY&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:13px;color:var(--cream);line-height:1.6;"&gt;⚡ Nighthawk — Your body is a temple. Every clean day is an act of worship. Check your Hume Band. What does the data say? Honor what it's showing you. Let's go.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;"&gt;TAP TO COPY · FRIDAY&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:13px;color:var(--cream);line-height:1.6;"&gt;🏋️ Nighthawk — End of week. You either earned the weekend or you didn't. The man you were at 215 lbs is not gone — he's waiting. Finish the week right. Train hard tonight.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card card-amber" onclick="copyText(this)" style="cursor:pointer;"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:9px;color:var(--amber);letter-spacing:2px;margin-bottom:8px;"&gt;TAP TO COPY · WEEKEND&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div style="font-size:13px;color:var(--cream);line-height:1.6;"&gt;☀️ Nighthawk — Weekend. Rest is part of the program. Eat clean. Pray. Spend time with her. Monica prayed for Augustine for 30 years. You are being formed right now — even in the rest.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card" style="margin-top:12px;"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="section-label"&gt;Add to iPhone Home Screen&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;1&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;Open this file in &lt;strong&gt;Safari&lt;/strong&gt; on your iPhone (not Chrome).&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;2&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;Tap the &lt;strong&gt;Share&lt;/strong&gt; button (box with arrow) at the bottom of Safari.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;3&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;Scroll down and tap &lt;strong&gt;"Add to Home Screen"&lt;/strong&gt;.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="step-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-num"&gt;4&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="step-text"&gt;Name it &lt;code&gt;Nighthawk&lt;/code&gt; → tap &lt;strong&gt;Add&lt;/strong&gt;. Done. Full-screen app on your home screen.&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1"><br></p>
+<p class="p1">&lt;!-- ═══════════ DATA &amp; LOGIC ═══════════ --&gt;<br>
+&lt;script&gt;<br>
+const START_DATE = new Date('2026-07-07');</p>
+<p class="p1"><br></p>
+<p class="p1">const DAILY_VERSES = [<br>
+<span class="Apple-converted-space">  </span>{ text: "Do you not know that your body is a temple of the Holy Spirit within you? Glorify God in your body.", ref: "1 Corinthians 6:19–20" },<br>
+<span class="Apple-converted-space">  </span>{ text: "I can do all things through Christ who strengthens me.", ref: "Philippians 4:13" },<br>
+<span class="Apple-converted-space">  </span>{ text: "Have no anxiety at all, but in everything, by prayer and petition, make your requests known to God.", ref: "Philippians 4:6" },<br>
+<span class="Apple-converted-space">  </span>{ text: "No temptation has overtaken you except what is common to mankind. God will provide a way out.", ref: "1 Corinthians 10:13" },<br>
+<span class="Apple-converted-space">  </span>{ text: "Do not be overcome by evil, but overcome evil with good.", ref: "Romans 12:21" },<br>
+<span class="Apple-converted-space">  </span>{ text: "Whatever is true, whatever is honorable, whatever is just, whatever is pure — think about these things.", ref: "Philippians 4:8" },<br>
+<span class="Apple-converted-space">  </span>{ text: "I drive my body and train it, for fear that after proclaiming to others I myself should be disqualified.", ref: "1 Corinthians 9:27" },<br>
+];</p>
+<p class="p1"><br></p>
+<p class="p1">const DAILY_MOTIVES = [<br>
+<span class="Apple-converted-space">  </span>{ text: "You have power over your mind, not outside events. Realize this, and you will find strength.", attr: "Marcus Aurelius" },<br>
+<span class="Apple-converted-space">  </span>{ text: "Thou madest us for Thyself, and our heart is restless until it repose in Thee.", attr: "St. Augustine — Confessions I" },<br>
+<span class="Apple-converted-space">  </span>{ text: "The things that we love tell us what we are.", attr: "St. Thomas Aquinas" },<br>
+<span class="Apple-converted-space">  </span>{ text: "Waste no more time arguing what a good man should be. Be one.", attr: "Marcus Aurelius" },<br>
+<span class="Apple-converted-space">  </span>{ text: "Our heart is restless until it rests in You. Late have I loved You, O Beauty ever ancient, ever new.", attr: "St. Augustine — Confessions X" },<br>
+<span class="Apple-converted-space">  </span>{ text: "You could leave life right now. Let that determine what you do and say and think.", attr: "Marcus Aurelius" },<br>
+<span class="Apple-converted-space">  </span>{ text: "The soul that loves God has no need for anything else.", attr: "St. John of the Cross" },<br>
+];</p>
+<p class="p1"><br></p>
+<p class="p1">const WEEKS = [<br>
+<span class="Apple-converted-space">  </span>{ label: "WEEK 1 — Reactivation", theme: "Re-establish movement patterns. Moderate intensity. Form over weight.", hume: "Baseline HRV. Expect disruption from nicotine reduction.", days: [<br>
+<span class="Apple-converted-space">    </span>{ day:"MON", type:"strength", label:"CHEST + BACK", note:"Arnold Split Day 1. Push/pull superset style.", exercises:[{group:"Chest",opts:["★ Smith Machine Bench Press 4×8–10","○ Dumbbell Flat Press 4×10","○ Dumbbell Incline Press 4×10"]},{group:"Back",opts:["★ Pull-Ups 4×8","○ Smith Machine Bent Row 4×10","○ Dumbbell Single-Arm Row 4×10"]},{group:"Finisher",opts:["★ Battle Ropes 3×30 sec","○ Tricep Rope Pulldown 3×15"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"TUE", type:"cardio", label:"RUN DAY", note:"Easy pace. Build aerobic base.", exercises:[], cardio:{type:"Easy Run",dist:"2.5–3 miles",pace:"Conversational (~10–11 min/mi)",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"Arnold Split Day 2.", exercises:[{group:"Shoulders",opts:["★ Dumbbell Arnold Press 4×10","○ Lateral Raise 4×12","○ Front Raise 3×12"]},{group:"Biceps",opts:["★ Dumbbell Curl 4×10","○ Hammer Curl 3×12","○ Incline Curl 3×10"]},{group:"Triceps",opts:["★ Tricep Rope Pulldown 4×12","○ OH Dumbbell Extension 3×12","○ Close-Grip Smith Press 3×10"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"THU", type:"cardio", label:"RUN DAY", note:"Same as Tuesday. Consistency over speed.", exercises:[], cardio:{type:"Easy Run",dist:"2.5–3 miles",pace:"Conversational pace",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"FRI", type:"strength", label:"LEGS + CORE", note:"Arnold Split Day 3. Foundation movement.", exercises:[{group:"Legs",opts:["★ Smith Machine Squat 4×8–10","○ Dumbbell Romanian Deadlift 4×10","○ Dumbbell Walking Lunge 3×12 each"]},{group:"Core",opts:["★ Hanging Knee Raise 3×15","○ Plank 3×45 sec","○ Dumbbell Russian Twist 3×20"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"SAT", type:"cardio", label:"LONG RUN / HIKE", note:"Use Cincinnati trails. Low intensity, long duration.", exercises:[], cardio:{type:"Long Run or Hike",dist:"4–5 miles",pace:"Easy / enjoy it",loc:"Eden Park, Lunken Trail, or local hike"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Walk, stretch, foam roll. Check Hume Band scores.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">  </span>]},<br>
+<span class="Apple-converted-space">  </span>{ label: "WEEK 2 — Foundation", theme: "Increase intensity 10–15%. Nicotine cold turkey this week. Expect fatigue dip days 3–5.", hume: "HRV may dip mid-week during nicotine withdrawal. Rebound is coming.", days: [<br>
+<span class="Apple-converted-space">    </span>{ day:"MON", type:"strength", label:"CHEST + BACK", note:"Add 5–10 lbs to all pressing from Week 1.", exercises:[{group:"Chest",opts:["★ Smith Bench Press 4×8 (heavier)","○ Dumbbell Incline Press 4×10","○ Dumbbell Fly 3×12"]},{group:"Back",opts:["★ Pull-Ups 4×10","○ Smith Pendlay Row 4×8","○ DB Single-Arm Row 4×10"]},{group:"Finisher",opts:["★ Battle Ropes 4×30 sec","○ Tricep Pulldown 3×15"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"TUE", type:"cardio", label:"INTERVAL RUN", note:"Start adding tempo intervals.", exercises:[], cardio:{type:"Interval Run",dist:"3 miles total",pace:"1mi easy → 1mi tempo (8:30/mi) → 1mi cool-down",loc:"Treadmill or trail"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"Add 1 extra set per group.", exercises:[{group:"Shoulders",opts:["★ Arnold Press 5×10","○ Lateral Raise 4×12","○ Rear Delt Fly 3×15"]},{group:"Biceps",opts:["★ DB Curl 4×10","○ Hammer Curl 4×12","○ Concentration Curl 3×10"]},{group:"Triceps",opts:["★ Rope Pulldown 4×12","○ OH DB Extension 4×12","○ Diamond Push-Ups 3×15"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"THU", type:"cardio", label:"EASY RUN", note:"Easy run if withdrawal fatigue is heavy. Listen to your body.", exercises:[], cardio:{type:"Easy Run",dist:"3 miles",pace:"Listen to your body today",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"FRI", type:"strength", label:"LEGS + CORE", note:"Push squat depth. Hamstring focus.", exercises:[{group:"Legs",opts:["★ Smith Squat 5×8","○ Romanian Deadlift 4×10","○ Bulgarian Split Squat 3×10 each"]},{group:"Calves",opts:["★ Standing Calf Raise 4×20","○ Seated Calf Raise 3×20"]},{group:"Core",opts:["★ Hanging Leg Raise 3×15","○ Ab Wheel Rollout 3×10","○ Plank 3×60 sec"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"SAT", type:"cardio", label:"LONG RUN", note:"Slightly longer than Week 1.", exercises:[], cardio:{type:"Long Run",dist:"5 miles",pace:"Easy pace",loc:"Trail preferred"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Full rest. Sleep is training. Review Hume Band weekly trends.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">  </span>]},<br>
+<span class="Apple-converted-space">  </span>{ label: "WEEK 3 — Build Phase", theme: "Nicotine-free. Energy returning. Push intensity. Body recalibrating.", hume: "HRV trending upward. RHR dropping. Sleep improving.", days: [<br>
+<span class="Apple-converted-space">    </span>{ day:"MON", type:"strength", label:"CHEST + BACK", note:"Progressive overload — heavier compounds.", exercises:[{group:"Chest",opts:["★ Smith Bench 5×6–8 (heavy)","○ Incline DB Press 4×10","○ Dumbbell Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups 4×8","○ Smith Bent Row 5×8","○ DB Pullover 3×12"]},{group:"Finisher",opts:["★ Battle Ropes 4×40 sec","○ Push-Up Burnout to failure"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"TUE", type:"cardio", label:"TEMPO RUN", note:"First real tempo push.", exercises:[], cardio:{type:"Tempo Run",dist:"3.5 miles",pace:"1mi easy → 1.5mi at 8:00/mi → 1mi cool-down",loc:"Treadmill or flat trail"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"Volume and intensity both up.", exercises:[{group:"Shoulders",opts:["★ Arnold Press 5×10","○ Lateral Raise 5×12","○ Rear Delt Fly 4×15"]},{group:"Biceps",opts:["★ DB Curl 5×10","○ Hammer Curl 4×12","○ Incline Curl 3×10"]},{group:"Triceps",opts:["★ Rope Pulldown 5×12","○ OH Extension 4×12","○ Close-Grip Push-Up 3×15"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"THU", type:"strength", label:"CHEST + BACK (Hotel)", note:"Travel-friendly — dumbbells and bodyweight only.", exercises:[{group:"Chest",opts:["★ Push-Up Variations 4×15–20","○ DB Press on floor 4×12","○ DB Fly on floor 3×12"]},{group:"Back",opts:["★ DB Single-Arm Row 4×10","○ Resistance band rows 4×12","○ Superman Hold 3×20"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"FRI", type:"strength", label:"LEGS + CORE", note:"Add weight to everything. Your legs can handle more.", exercises:[{group:"Legs",opts:["★ Smith Squat 5×8 (heavier)","○ Romanian Deadlift 4×10","○ Bulgarian Split Squat 4×10 each"]},{group:"Core",opts:["★ Hanging Leg Raise 4×15","○ Ab Wheel 3×12","○ Side Plank 3×45 sec each"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"SAT", type:"cardio", label:"LONG RUN", note:"", exercises:[], cardio:{type:"Long Run",dist:"5.5 miles",pace:"Easy — conversational",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Mobility work. 10 min stretch minimum.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">  </span>]},<br>
+<span class="Apple-converted-space">  </span>{ label: "WEEK 4 — Deload", theme: "Planned deload. Drop volume 40%. Let gains consolidate. You'll feel fresh for Week 5.", hume: "Highest HRV week so far. Confirm full recovery before Week 5 push.", days: [<br>
+<span class="Apple-converted-space">    </span>{ day:"MON", type:"strength", label:"CHEST + BACK (Light)", note:"60–70% of usual weight. Mind-muscle connection.", exercises:[{group:"Chest",opts:["★ Smith Bench 3×10 (light)","○ DB Fly 3×12"]},{group:"Back",opts:["★ Pull-Ups 3×8","○ DB Row 3×10"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"TUE", type:"cardio", label:"EASY RUN", note:"", exercises:[], cardio:{type:"Easy Run",dist:"3 miles",pace:"Very easy. Enjoy it.",loc:"Trail preferred"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"WED", type:"strength", label:"SHOULDERS + ARMS (Light)", note:"Light weight, high reps, pump focus.", exercises:[{group:"Shoulders",opts:["★ Lateral Raise 3×15","○ Arnold Press 3×12 (light)"]},{group:"Arms",opts:["★ DB Curl 3×15","○ Rope Pulldown 3×15"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"THU", type:"rest", label:"ACTIVE RECOVERY", note:"Walk, swim, or light hike. No structured training.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"FRI", type:"strength", label:"LEGS (Light)", note:"", exercises:[{group:"Legs",opts:["★ Goblet Squat 3×12 (light)","○ Romanian Deadlift 3×12","○ Walking Lunge 3×10 each"]},{group:"Core",opts:["★ Plank 3×60 sec","○ Hanging Knee Raise 3×15"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"SAT", type:"cardio", label:"HIKE OR EASY RUN", note:"", exercises:[], cardio:{type:"Hike or Easy Run",dist:"4–5 miles",pace:"Very easy",loc:"Cincinnati trail — recharge mentally"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"SUN", type:"rest", label:"FULL REST", note:"Sleep in. Eat well. You've earned it.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">  </span>]},<br>
+<span class="Apple-converted-space">  </span>{ label: "WEEK 5 — Intensity Spike", theme: "Post-deload surge. Visible changes accelerating. Muscle memory firing on all cylinders.", hume: "Recovery scores high coming off deload. Green light to push hard.", days: [<br>
+<span class="Apple-converted-space">    </span>{ day:"MON", type:"strength", label:"CHEST + BACK", note:"Heaviest weights yet. Chase bench PRs.", exercises:[{group:"Chest",opts:["★ Smith Bench 5×5 (heavy)","○ Incline DB Press 5×8","○ DB Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups 5×8","○ Heavy DB Row 5×8","○ Smith Row 4×8"]},{group:"Finisher",opts:["★ Battle Ropes 5×40 sec","○ Push-Up Burnout"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"TUE", type:"cardio", label:"SPEED INTERVALS", note:"", exercises:[], cardio:{type:"Speed Intervals",dist:"3.5 miles total",pace:"400m hard / 400m easy × 6 rounds",loc:"Treadmill or track"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"Arms visibly bigger by now. Push it.", exercises:[{group:"Shoulders",opts:["★ Arnold Press 6×10","○ Lateral Raise 5×12","○ Rear Delt Fly 4×15"]},{group:"Biceps",opts:["★ DB Curl 5×10","○ Hammer Curl 4×12","○ Concentration Curl 3×10"]},{group:"Triceps",opts:["★ Rope Pulldown 5×12","○ OH Extension 4×12","○ Dips 3×max"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"THU", type:"cardio", label:"TEMPO RUN", note:"", exercises:[], cardio:{type:"Tempo Run",dist:"4 miles",pace:"1mi easy → 2mi at 7:45–8:00/mi → 1mi cool-down",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"FRI", type:"strength", label:"LEGS + CORE", note:"Squat heavy. This is the week legs start changing.", exercises:[{group:"Legs",opts:["★ Smith Squat 5×5 (heaviest yet)","○ Romanian Deadlift 5×8","○ Bulgarian Split Squat 4×10 each"]},{group:"Core",opts:["★ Hanging Leg Raise 4×15","○ Ab Wheel 4×12","○ Plank 3×75 sec"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"SAT", type:"cardio", label:"LONG RUN", note:"First 5K goal pace check.", exercises:[], cardio:{type:"Long Run",dist:"6 miles",pace:"Easy-moderate",loc:"Trail"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Check Hume Band weekly summary. Document progress.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">  </span>]},<br>
+<span class="Apple-converted-space">  </span>{ label: "WEEK 6 — Peak Volume", theme: "Highest volume week. Abs visible. Shoulders filling out. You look noticeably different.", hume: "Monitor HRV closely — high volume week. If score drops below 70% of baseline, add rest day.", days: [<br>
+<span class="Apple-converted-space">    </span>{ day:"MON", type:"strength", label:"CHEST + BACK", note:"Volume and intensity both at peak.", exercises:[{group:"Chest",opts:["★ Smith Bench 6×5–8","○ Incline DB Press 5×10","○ DB Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups 5×8–10","○ DB Row 5×10","○ Smith Row 4×10"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"TUE", type:"cardio", label:"SPEED WORK", note:"", exercises:[], cardio:{type:"Speed Intervals",dist:"4 miles total",pace:"800m hard / 400m easy × 4 rounds",loc:"Track or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"", exercises:[{group:"Shoulders",opts:["★ Arnold Press 6×10","○ Lateral Raise 6×12","○ Rear Delt Fly 5×15"]},{group:"Biceps",opts:["★ DB Curl 5×10","○ Hammer Curl 5×12","○ 21s — 3 sets"]},{group:"Triceps",opts:["★ Rope Pulldown 5×12","○ OH Extension 5×12","○ Dips 4×max"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"THU", type:"cardio", label:"TEMPO RUN", note:"", exercises:[], cardio:{type:"Tempo Run",dist:"4.5 miles",pace:"1mi easy → 2.5mi at 7:30–7:45/mi → 1mi cool-down",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"FRI", type:"strength", label:"LEGS + CORE", note:"", exercises:[{group:"Legs",opts:["★ Smith Squat 6×5 (heaviest of program)","○ Romanian Deadlift 5×8","○ Bulgarian Split Squat 4×12"]},{group:"Core",opts:["★ Hanging Leg Raise 5×15","○ Ab Wheel 4×15","○ Plank 4×75 sec"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"SAT", type:"cardio", label:"LONG RUN", note:"Last mile at goal 5K pace.", exercises:[], cardio:{type:"Long Run",dist:"6.5 miles",pace:"Easy with final mile at race pace",loc:"Trail"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Take progress photos this week. Compare to Week 1.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">  </span>]},<br>
+<span class="Apple-converted-space">  </span>{ label: "WEEK 7 — Strength Peak", theme: "Chase PRs. Runs getting faster. Body composition visibly transformed.", hume: "HRV 20–30% above Week 1 average. Recovery locked in at new baseline.", days: [<br>
+<span class="Apple-converted-space">    </span>{ day:"MON", type:"strength", label:"CHEST + BACK — PR Week", note:"Go for personal bests on bench and row.", exercises:[{group:"Chest",opts:["★ Smith Bench 3×3 (PR attempt)","○ Incline DB Press 5×8","○ DB Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups max weight 5×5","○ DB Row max weight 5×8"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"TUE", type:"cardio", label:"5K TIME TRIAL", note:"Run your best 5K. Mid-program benchmark.", exercises:[], cardio:{type:"5K Time Trial",dist:"3.1 miles",pace:"All out — see what you've got",loc:"Treadmill or flat trail"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"WED", type:"strength", label:"SHOULDERS + ARMS — PR", note:"", exercises:[{group:"Shoulders",opts:["★ Arnold Press 5×8 (heavy)","○ Lateral Raise 5×12","○ Rear Delt Fly 5×15"]},{group:"Biceps",opts:["★ DB Curl 5×8 (heavy)","○ Hammer Curl 4×10","○ Incline Curl 3×10"]},{group:"Triceps",opts:["★ Rope Pulldown 5×10 (heavy)","○ OH Extension 4×10","○ Dips 4×max"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"THU", type:"cardio", label:"EASY RECOVERY RUN", note:"Easy after 5K effort Tuesday.", exercises:[], cardio:{type:"Easy Run",dist:"3 miles",pace:"Very easy",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"FRI", type:"strength", label:"LEGS — Squat PR", note:"", exercises:[{group:"Legs",opts:["★ Smith Squat 3×3 (PR attempt)","○ Romanian Deadlift 5×6 (heavy)","○ Bulgarian Split Squat 4×10"]},{group:"Core",opts:["★ Hanging Leg Raise 5×15","○ Ab Wheel 4×15","○ Plank 3×90 sec"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"SAT", type:"cardio", label:"LONG RUN", note:"Celebrate how far you've come.", exercises:[], cardio:{type:"Long Run",dist:"7 miles",pace:"Easy",loc:"Trail"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Final week prep. Sleep hard. Eat clean.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">  </span>]},<br>
+<span class="Apple-converted-space">  </span>{ label: "WEEK 8 — PRIME WEEK", theme: "Final push. This is why you started. You're back. Leave it all on the field.", hume: "Document final HRV, RHR, sleep scores. Compare to Week 1. The data tells the story.", days: [<br>
+<span class="Apple-converted-space">    </span>{ day:"MON", type:"strength", label:"CHEST + BACK — FINAL", note:"", exercises:[{group:"Chest",opts:["★ Smith Bench 5×5 (heavy and crisp)","○ Incline DB Press 5×10","○ DB Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups 5×10","○ DB Row 5×10"]},{group:"Finisher",opts:["★ Battle Ropes 5×45 sec","○ Push-Up Burnout to failure"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"TUE", type:"cardio", label:"SPEED WORK — FINAL", note:"Push harder than Week 6. You're faster now.", exercises:[], cardio:{type:"Speed Intervals",dist:"4 miles",pace:"Push beyond Week 6 effort",loc:"Track or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"WED", type:"strength", label:"SHOULDERS + ARMS — FINAL", note:"", exercises:[{group:"Shoulders",opts:["★ Arnold Press 6×10","○ Lateral Raise 6×12","○ Rear Delt Fly 5×15"]},{group:"Biceps",opts:["★ DB Curl 6×10","○ Hammer Curl 5×12","○ 21s — 3 sets"]},{group:"Triceps",opts:["★ Rope Pulldown 6×12","○ OH Extension 5×12","○ Dips 5×max"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"THU", type:"cardio", label:"TEMPO RUN — FINAL", note:"", exercises:[], cardio:{type:"Tempo Run",dist:"5 miles",pace:"1mi easy → 3mi at 7:15–7:30/mi → 1mi cool-down",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"FRI", type:"strength", label:"LEGS — FINAL", note:"", exercises:[{group:"Legs",opts:["★ Smith Squat 5×5 (heaviest controllable)","○ Romanian Deadlift 5×8","○ Bulgarian Split Squat 5×10 each"]},{group:"Core",opts:["★ Hanging Leg Raise 5×20","○ Ab Wheel 5×15","○ Plank 3×90 sec"]}], cardio:null },<br>
+<span class="Apple-converted-space">    </span>{ day:"SAT", type:"cardio", label:"FINAL 5K TIME TRIAL", note:"Your real benchmark. You will be faster.", exercises:[], cardio:{type:"5K Time Trial",dist:"3.1 miles",pace:"All out. Leave nothing behind.",loc:"Trail or treadmill"} },<br>
+<span class="Apple-converted-space">    </span>{ day:"SUN", type:"rest", label:"CELEBRATE + REFLECT", note:"Take final photos. Compare Week 1 vs Week 8 Hume Band data. You did it.", exercises:[], cardio:null },<br>
+<span class="Apple-converted-space">  </span>]},<br>
+];</p>
+<p class="p1"><br></p>
+<p class="p1">// ── Page nav ──<br>
+function showPage(id) {<br>
+<span class="Apple-converted-space">  </span>document.querySelectorAll('.page').forEach(p =&gt; p.classList.remove('active'));<br>
+<span class="Apple-converted-space">  </span>document.querySelectorAll('.nav-btn').forEach(b =&gt; b.classList.remove('active'));<br>
+<span class="Apple-converted-space">  </span>document.getElementById('page-' + id).classList.add('active');<br>
+<span class="Apple-converted-space">  </span>document.getElementById('nav-' + id).classList.add('active');<br>
+}</p>
+<p class="p1"><br></p>
+<p class="p1">// ── Date + day counter ──<br>
+function updateDate() {<br>
+<span class="Apple-converted-space">  </span>const now = new Date();<br>
+<span class="Apple-converted-space">  </span>const dayNum = Math.max(1, Math.floor((now - START_DATE) / <a href="tel:86400000">86400000</a>) + 1);<br>
+<span class="Apple-converted-space">  </span>const weekNum = Math.min(8, Math.ceil(dayNum / 7));<br>
+<span class="Apple-converted-space">  </span>document.getElementById('dateBadge').innerHTML =<br>
+<span class="Apple-converted-space">    </span>now.toLocaleDateString('en-US', {month:'short',day:'numeric'}) +<br>
+<span class="Apple-converted-space">    </span>`&lt;br/&gt;&lt;span&gt;Week ${weekNum} · Day ${dayNum}&lt;/span&gt;`;<br>
+}</p>
+<p class="p1"><br></p>
+<p class="p1">// ── Today verse + motive ──<br>
+function loadToday() {<br>
+<span class="Apple-converted-space">  </span>const idx = new Date().getDay(); // 0–6<br>
+<span class="Apple-converted-space">  </span>const v = DAILY_VERSES[idx % DAILY_VERSES.length];<br>
+<span class="Apple-converted-space">  </span>const m = DAILY_MOTIVES[idx % DAILY_MOTIVES.length];<br>
+<span class="Apple-converted-space">  </span>document.getElementById('todayVerse').textContent = `"${v.text}"`;<br>
+<span class="Apple-converted-space">  </span>document.getElementById('todayVerseRef').textContent = v.ref;<br>
+<span class="Apple-converted-space">  </span>document.getElementById('todayMotive').textContent = `"${m.text}"`;<br>
+<span class="Apple-converted-space">  </span>document.getElementById('todayMotiveAttr').textContent = `— ${m.attr}`;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Today's workout<br>
+<span class="Apple-converted-space">  </span>const now = new Date();<br>
+<span class="Apple-converted-space">  </span>const dayNum = Math.max(0, Math.floor((now - START_DATE) / <a href="tel:86400000">86400000</a>));<br>
+<span class="Apple-converted-space">  </span>const weekIdx = Math.min(7, Math.floor(dayNum / 7));<br>
+<span class="Apple-converted-space">  </span>const dayOfWeek = now.getDay(); // 0=Sun<br>
+<span class="Apple-converted-space">  </span>const dayMap = [6,0,1,2,3,4,5]; // Sun→index6, Mon→0...<br>
+<span class="Apple-converted-space">  </span>const dIdx = dayMap[dayOfWeek];<br>
+<span class="Apple-converted-space">  </span>const todayDay = WEEKS[weekIdx].days[dIdx];<br>
+<span class="Apple-converted-space">  </span>const wkLabel = document.getElementById('todayWorkout');<br>
+<span class="Apple-converted-space">  </span>if (todayDay) {<br>
+<span class="Apple-converted-space">    </span>const typeColor = todayDay.type === 'strength' ? 'var(--amber)' : todayDay.type === 'cardio' ? 'var(--teal)' : 'var(--muted)';<br>
+<span class="Apple-converted-space">    </span>let html = `&lt;div style="color:${typeColor};font-weight:700;font-size:14px;margin-bottom:4px;"&gt;${todayDay.label}&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">    </span>if (todayDay.note) html += `&lt;div style="font-size:11px;color:var(--muted);margin-bottom:8px;"&gt;${todayDay.note}&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">    </span>if (todayDay.cardio) {<br>
+<span class="Apple-converted-space">      </span>html += `&lt;div style="font-size:12px;color:var(--cream);"&gt;📏 ${todayDay.cardio.dist}&lt;br/&gt;⏱ ${todayDay.cardio.pace}&lt;br/&gt;&lt;span style="color:var(--muted);"&gt;📍 ${todayDay.cardio.loc}&lt;/span&gt;&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">    </span>}<br>
+<span class="Apple-converted-space">    </span>if (todayDay.exercises.length) {<br>
+<span class="Apple-converted-space">      </span>todayDay.exercises.slice(0,2).forEach(ex =&gt; {<br>
+<span class="Apple-converted-space">        </span>html += `&lt;div style="margin-top:8px;font-size:10px;color:var(--amber);letter-spacing:2px;"&gt;${ex.group.toUpperCase()}&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">        </span>html += `&lt;div style="font-size:12px;color:var(--cream);"&gt;${ex.opts[0].replace('★ ','')}&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">      </span>});<br>
+<span class="Apple-converted-space">    </span>}<br>
+<span class="Apple-converted-space">    </span>wkLabel.innerHTML = html;<br>
+<span class="Apple-converted-space">  </span>}<br>
+}</p>
+<p class="p1"><br></p>
+<p class="p1">// ── Plan page ──<br>
+let currentWeek = 0;<br>
+function buildPlan() {<br>
+<span class="Apple-converted-space">  </span>const scroller = document.getElementById('weekScroller');<br>
+<span class="Apple-converted-space">  </span>scroller.innerHTML = WEEKS.map((w,i) =&gt;<br>
+<span class="Apple-converted-space">    </span>`&lt;button class="week-pill${i===0?' active':''}" onclick="selectWeek(${i})" id="pill-${i}"&gt;${i+1}&lt;/button&gt;`<br>
+<span class="Apple-converted-space">  </span>).join('');<br>
+<span class="Apple-converted-space">  </span>renderWeek(0);<br>
+}</p>
+<p class="p1"><br></p>
+<p class="p1">function selectWeek(i) {<br>
+<span class="Apple-converted-space">  </span>currentWeek = i;<br>
+<span class="Apple-converted-space">  </span>document.querySelectorAll('.week-pill').forEach(p =&gt; p.classList.remove('active'));<br>
+<span class="Apple-converted-space">  </span>document.getElementById('pill-' + i).classList.add('active');<br>
+<span class="Apple-converted-space">  </span>renderWeek(i);<br>
+}</p>
+<p class="p1"><br></p>
+<p class="p1">function renderWeek(i) {<br>
+<span class="Apple-converted-space">  </span>const w = WEEKS[i];<br>
+<span class="Apple-converted-space">  </span>let html = `&lt;div class="week-theme"&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="week-name"&gt;${w.label}&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="week-desc"&gt;${w.theme}&lt;/div&gt;<br>
+<span class="Apple-converted-space">    </span>&lt;div class="hume-box"&gt;&lt;div class="hume-label"&gt;⌚ HUME BAND&lt;/div&gt;&lt;div class="hume-text"&gt;${w.hume}&lt;/div&gt;&lt;/div&gt;<br>
+<span class="Apple-converted-space">  </span>&lt;/div&gt;`;</p>
+<p class="p1"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>w.days.forEach((day, di) =&gt; {<br>
+<span class="Apple-converted-space">    </span>const tagClass = day.type === 'strength' ? 'tag-strength' : day.type === 'cardio' ? 'tag-cardio' : 'tag-rest';<br>
+<span class="Apple-converted-space">    </span>const typeEmoji = day.type === 'strength' ? '💪' : day.type === 'cardio' ? '🏃' : '😴';<br>
+<span class="Apple-converted-space">    </span>html += `&lt;div class="day-row"&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;button class="day-header" onclick="toggleDay('d-${i}-${di}')"&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;span class="day-tag ${tagClass}"&gt;${day.day}&lt;/span&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;span&gt;<br>
+<span class="Apple-converted-space">          </span>&lt;div class="day-title"&gt;${day.label}&lt;/div&gt;<br>
+<span class="Apple-converted-space">          </span>&lt;div class="day-sub"&gt;${typeEmoji} ${day.type.toUpperCase()}&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;/span&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;span class="day-chevron" id="chev-d-${i}-${di}"&gt;›&lt;/span&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;/button&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;div class="day-body" id="d-${i}-${di}"&gt;`;<br>
+<span class="Apple-converted-space">    </span>if (day.note) html += `&lt;div class="day-note"&gt;${day.note}&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">    </span>if (day.cardio) {<br>
+<span class="Apple-converted-space">      </span>html += `&lt;div class="cardio-box"&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div class="cardio-title"&gt;${day.cardio.type}&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div class="cardio-row"&gt;📏 ${day.cardio.dist}&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div class="cardio-row"&gt;⏱ ${day.cardio.pace}&lt;/div&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;div class="cardio-loc"&gt;📍 ${day.cardio.loc}&lt;/div&gt;<br>
+<span class="Apple-converted-space">      </span>&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">    </span>}<br>
+<span class="Apple-converted-space">    </span>day.exercises.forEach(ex =&gt; {<br>
+<span class="Apple-converted-space">      </span>html += `&lt;div class="exercise-group"&gt;&lt;div class="ex-group-label"&gt;${ex.group}&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">      </span>ex.opts.forEach((opt,oi) =&gt; {<br>
+<span class="Apple-converted-space">        </span>const isPrimary = opt.startsWith('★');<br>
+<span class="Apple-converted-space">        </span>const label = opt.replace('★ ','').replace('○ ','');<br>
+<span class="Apple-converted-space">        </span>html += `&lt;div class="ex-option"&gt;<br>
+<span class="Apple-converted-space">          </span>&lt;span class="ex-star"&gt;${isPrimary ? '★' : '○'}&lt;/span&gt;<br>
+<span class="Apple-converted-space">          </span>&lt;span class="ex-text ${isPrimary ? 'primary' : 'alt'}"&gt;${isPrimary ? '&lt;strong&gt;'+label+'&lt;/strong&gt;' : label}&lt;/span&gt;<br>
+<span class="Apple-converted-space">        </span>&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">      </span>});<br>
+<span class="Apple-converted-space">      </span>html += `&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">    </span>});<br>
+<span class="Apple-converted-space">    </span>html += `&lt;/div&gt;&lt;/div&gt;`;<br>
+<span class="Apple-converted-space">  </span>});<br>
+<span class="Apple-converted-space">  </span>document.getElementById('weekContent').innerHTML = html;<br>
+}</p>
+<p class="p1"><br></p>
+<p class="p1">function toggleDay(id) {<br>
+<span class="Apple-converted-space">  </span>const body = document.getElementById(id);<br>
+<span class="Apple-converted-space">  </span>const chev = document.getElementById('chev-' + id);<br>
+<span class="Apple-converted-space">  </span>const isOpen = body.classList.contains('open');<br>
+<span class="Apple-converted-space">  </span>body.classList.toggle('open', !isOpen);<br>
+<span class="Apple-converted-space">  </span>chev.classList.toggle('open', !isOpen);<br>
+}</p>
+<p class="p1"><br></p>
+<p class="p1">// ── Copy text ──<br>
+function copyText(el) {<br>
+<span class="Apple-converted-space">  </span>const text = el.querySelector('div:last-child').textContent;<br>
+<span class="Apple-converted-space">  </span>navigator.clipboard.writeText(text).then(() =&gt; {<br>
+<span class="Apple-converted-space">    </span>const label = el.querySelector('div:first-child');<br>
+<span class="Apple-converted-space">    </span>const orig = label.textContent;<br>
+<span class="Apple-converted-space">    </span>label.textContent = '✓ COPIED!';<br>
+<span class="Apple-converted-space">    </span>setTimeout(() =&gt; label.textContent = orig, 1500);<br>
+<span class="Apple-converted-space">  </span>});<br>
+}</p>
+<p class="p1"><br></p>
+<p class="p1">// ── Init ──<br>
+updateDate();<br>
+loadToday();<br>
+buildPlan();</p>
+<p class="p1"><br></p>
+<p class="p1">// Auto-scroll to current week on plan load<br>
+const now = new Date();<br>
+const dayNum = Math.max(0, Math.floor((now - START_DATE) / <a href="tel:86400000">86400000</a>));<br>
+const autoWeek = Math.min(7, Math.floor(dayNum / 7));<br>
+if (autoWeek &gt; 0) setTimeout(() =&gt; selectWeek(autoWeek), 100);<br>
+&lt;/script&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;</p>
+
+</body>
+</html>
