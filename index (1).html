@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Nighthawk"/>
+<meta name="theme-color" content="#0a0e1a"/>
+<title>Project Nighthawk</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0a0e1a;
+    --navy2: #111827;
+    --card: #161d2e;
+    --card2: #1c2440;
+    --amber: #c8a96e;
+    --amber-light: #e8c98a;
+    --teal: #4ecdc4;
+    --cream: #e8e4d9;
+    --muted: #6b7a99;
+    --steel: #3a4155;
+    --red: #e05c5c;
+    --green: #5cb85c;
+    --gold: #c8a96e;
+    --border: #1e2840;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-bottom: calc(70px + var(--safe-bottom));
+  }
+  /* HEADER */
+  .app-header {
+    background: var(--navy);
+    padding: calc(var(--safe-top) + 16px) 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .app-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--cream);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .app-subtitle {
+    font-size: 10px;
+    color: var(--amber);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .date-badge {
+    text-align: right;
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .date-badge span { color: var(--amber); font-weight: 600; }
+  /* Hopper horizon line — the signature element */
+  .horizon-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--teal) 60%, transparent);
+    margin-bottom: 0;
+  }
+  /* NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0; right: 0;
+    background: var(--navy2);
+    border-top: 1px solid var(--border);
+    display: flex;
+    padding-bottom: var(--safe-bottom);
+    z-index: 200;
+  }
+  .nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 4px 8px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.2s;
+    gap: 4px;
+  }
+  .nav-btn.active { color: var(--amber); }
+  .nav-icon { font-size: 18px; line-height: 1; }
+  /* PAGES */
+  .page { display: none; padding: 16px; }
+  .page.active { display: block; }
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-amber { border-left: 3px solid var(--amber); }
+  .card-teal { border-left: 3px solid var(--teal); }
+  .card-red { border-left: 3px solid var(--red); }
+  .card-green { border-left: 3px solid var(--green); }
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .serif { font-family: 'Playfair Display', serif; }
+  /* TODAY PANEL */
+  .today-verse {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .verse-ref {
+    font-size: 11px;
+    color: var(--amber);
+    letter-spacing: 1px;
+  }
+  /* MACRO GRID */
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .macro-card {
+    background: var(--card2);
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid var(--border);
+  }
+  .macro-label { font-size: 9px; letter-spacing: 2px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
+  .macro-value { font-size: 26px; font-weight: 800; line-height: 1; }
+  .macro-unit { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  /* WEEK PILLS */
+  .week-scroller { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
+  .week-scroller::-webkit-scrollbar { display: none; }
+  .week-pill {
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .week-pill.active { background: var(--amber); color: #000; border-color: var(--amber); }
+  /* DAY ROWS */
+  .day-row {
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+  }
+  .day-tag {
+    flex-shrink: 0;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .tag-strength { background: var(--amber); color: #000; }
+  .tag-cardio { background: var(--teal); color: #000; }
+  .tag-rest { background: var(--steel); color: var(--cream); }
+  .day-title { font-size: 13px; font-weight: 700; color: var(--cream); }
+  .day-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .day-chevron { margin-left: auto; color: var(--amber); font-size: 16px; transition: transform 0.2s; }
+  .day-chevron.open { transform: rotate(90deg); }
+  .day-body { padding: 0 14px 14px; border-top: 1px solid var(--border); display: none; }
+  .day-body.open { display: block; }
+  .day-note { font-size: 11px; color: var(--muted); padding: 10px 0 8px; line-height: 1.6; }
+  .exercise-group { margin-top: 10px; }
+  .ex-group-label { font-size: 9px; color: var(--amber); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .ex-option { display: flex; gap: 8px; margin-bottom: 5px; align-items: flex-start; }
+  .ex-star { color: var(--amber); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+  .ex-text { font-size: 12px; line-height: 1.4; }
+  .ex-text.primary { color: var(--cream); }
+  .ex-text.alt { color: var(--muted); }
+  .cardio-box {
+    background: #0d1a18;
+    border-left: 3px solid var(--teal);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+  }
+  .cardio-title { color: var(--teal); font-weight: 700; font-size: 13px; margin-bottom: 8px; }
+  .cardio-row { font-size: 12px; color: var(--cream); margin-bottom: 4px; }
+  .cardio-loc { font-size: 11px; color: var(--muted); }
+  /* WEEK THEME CARD */
+  .week-theme {
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .week-name { color: var(--amber); font-weight: 800; font-size: 13px; margin-bottom: 4px; }
+  .week-desc { font-size: 12px; color: var(--cream); line-height: 1.5; margin-bottom: 8px; }
+  .hume-box { background: #1a1500; border-radius: 6px; padding: 8px 10px; border-left: 3px solid var(--amber); }
+  .hume-label { font-size: 9px; color: var(--amber); letter-spacing: 2px; margin-bottom: 2px; }
+  .hume-text { font-size: 11px; color: var(--cream); line-height: 1.4; }
+  /* REHAB SECTION */
+  .verse-card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .verse-category {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .verse-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.75;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .verse-citation { font-size: 11px; color: var(--amber); letter-spacing: 1px; }
+  .verse-reflection { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  /* AUGUSTINE */
+  .augustine-card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 18px;
+    margin-bottom: 12px;
+    border-top: 2px solid var(--amber);
+  }
+  .aug-label { font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 10px; }
+  .aug-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .aug-source { font-size: 10px; color: var(--muted); margin-bottom: 10px; }
+  .aug-reflection { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  /* MOTIVATION */
+  .motive-card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .motive-tag { font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 10px; }
+  .motive-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .motive-attr { font-size: 11px; color: var(--amber); }
+  .motive-body { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  /* NOTIFICATION GUIDE */
+  .step-row { display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; }
+  .step-num {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--amber);
+    color: #000;
+    font-weight: 800;
+    font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-text { font-size: 12px; color: var(--cream); line-height: 1.6; }
+  .step-text code {
+    background: var(--steel);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--teal);
+    font-family: monospace;
+  }
+  /* SUPP TABLE */
+  .supp-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+  .supp-row:last-child { border-bottom: none; }
+  .supp-name { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 3px; }
+  .supp-timing { font-size: 11px; color: var(--muted); }
+  .supp-dose { font-size: 12px; color: var(--amber); font-weight: 700; flex-shrink: 0; }
+  /* FAITH INTRO */
+  .faith-hero {
+    background: linear-gradient(135deg, #0d1520 0%, #0a0e1a 100%);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .cross { font-size: 32px; margin-bottom: 10px; }
+  .faith-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .faith-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  /* ACCORDION */
+  .accordion-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+  }
+  .accordion-label { font-size: 13px; font-weight: 600; color: var(--cream); }
+  .accordion-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .accordion-arrow { color: var(--amber); font-size: 14px; transition: transform 0.2s; flex-shrink: 0; }
+  .accordion-arrow.open { transform: rotate(90deg); }
+  .accordion-body { display: none; padding: 0 16px 16px; }
+  .accordion-body.open { display: block; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="header-top">
+    <div>
+      <div class="app-title">Project Nighthawk</div>
+      <div class="app-subtitle">Nick Charpentier · July 7, 2026</div>
+    </div>
+    <div class="date-badge" id="dateBadge">
+      Loading...<br/><span>Day 1</span>
+    </div>
+  </div>
+  <div class="horizon-line"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-btn active" onclick="showPage('today')" id="nav-today">
+    <span class="nav-icon">⚡</span>TODAY
+  </button>
+  <button class="nav-btn" onclick="showPage('plan')" id="nav-plan">
+    <span class="nav-icon">📋</span>PLAN
+  </button>
+  <button class="nav-btn" onclick="showPage('rehab')" id="nav-rehab">
+    <span class="nav-icon">✝️</span>REHAB
+  </button>
+  <button class="nav-btn" onclick="showPage('fuel')" id="nav-fuel">
+    <span class="nav-icon">🥗</span>FUEL
+  </button>
+  <button class="nav-btn" onclick="showPage('notify')" id="nav-notify">
+    <span class="nav-icon">🔔</span>ALERTS
+  </button>
+</div>
+
+<!-- TODAY PAGE -->
+<div class="page active" id="page-today">
+
+  <!-- Daily Verse -->
+  <div class="card card-teal">
+    <div class="section-label">Today's Word</div>
+    <div class="today-verse" id="todayVerse">Loading...</div>
+    <div class="verse-ref" id="todayVerseRef"></div>
+  </div>
+
+  <!-- Daily Motivation -->
+  <div class="card card-amber">
+    <div class="section-label">Daily Fire</div>
+    <div class="today-verse" id="todayMotive" style="font-size:14px;"></div>
+    <div class="verse-ref" id="todayMotiveAttr" style="margin-top:6px;"></div>
+  </div>
+
+  <!-- Today's Workout -->
+  <div class="card">
+    <div class="section-label">Today's Training</div>
+    <div id="todayWorkout">Loading...</div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="section-label" style="padding: 0 4px;">Daily Targets</div>
+  <div class="macro-grid">
+    <div class="macro-card"><div class="macro-label">Calories</div><div class="macro-value" style="color:var(--amber)">3,400</div><div class="macro-unit">kcal</div></div>
+    <div class="macro-card"><div class="macro-label">Protein</div><div class="macro-value" style="color:var(--green)">210g</div><div class="macro-unit">minimum</div></div>
+    <div class="macro-card"><div class="macro-label">Creatine</div><div class="macro-value" style="color:var(--teal)">5g</div><div class="macro-unit">daily</div></div>
+    <div class="macro-card"><div class="macro-label">Water</div><div class="macro-value" style="color:#6ab0e8">1 gal</div><div class="macro-unit">minimum</div></div>
+  </div>
+
+</div>
+
+<!-- PLAN PAGE -->
+<div class="page" id="page-plan">
+  <div class="section-label">8-Week Program</div>
+
+  <div class="week-scroller" id="weekScroller"></div>
+  <div id="weekContent"></div>
+</div>
+
+<!-- REHAB PAGE -->
+<div class="page" id="page-rehab">
+
+  <div class="faith-hero">
+    <div class="cross">✝</div>
+    <div class="faith-title">REHAB</div>
+    <div class="faith-sub">Honoring God through the body He gave you.<br/>Faith, discipline, and peace through the fire.</div>
+  </div>
+
+  <!-- Bible Verses — Body as Temple -->
+  <div class="section-label">The Body is a Temple</div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Physical Discipline</div>
+    <div class="verse-text">"Do you not know that your body is a temple of the Holy Spirit within you, which you have from God, and that you are not your own? For you were bought with a price; therefore glorify God in your body."</div>
+    <div class="verse-citation">1 Corinthians 6:19–20</div>
+    <div class="verse-reflection">Every rep, every mile, every clean meal is an act of worship. You are not destroying a habit — you are reclaiming a temple. God gave you that 6'4" frame and those genetics for a reason. Steward them.</div>
+  </div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Temptation</div>
+    <div class="verse-text">"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it."</div>
+    <div class="verse-citation">1 Corinthians 10:13</div>
+    <div class="verse-reflection">The craving for nicotine at 2pm is not unique to you. Every man who has ever quit has felt exactly what you feel right now. God has already built the exit ramp. You just have to take it.</div>
+  </div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Anxiety &amp; Withdrawal</div>
+    <div class="verse-text">"Have no anxiety at all, but in everything, by prayer and petition, with thanksgiving, make your requests known to God. Then the peace of God that surpasses all understanding will guard your hearts and minds in Christ Jesus."</div>
+    <div class="verse-citation">Philippians 4:6–7</div>
+    <div class="verse-reflection">Withdrawal is anxiety in the body. When it rises — stop, breathe, pray. Not as weakness. As the most disciplined thing a man can do. The peace that follows is not chemical. It is something else entirely.</div>
+  </div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Perseverance</div>
+    <div class="verse-text">"I can do all things through Christ who strengthens me."</div>
+    <div class="verse-citation">Philippians 4:13</div>
+    <div class="verse-reflection">Not a bumper sticker. A statement made by a man writing from prison, who had been beaten, shipwrecked, and starved. If Paul could have peace in chains, you can get through day three without a pouch.</div>
+  </div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Discipline</div>
+    <div class="verse-text">"Every athlete exercises discipline in every way. They do it to win a perishable crown, but we an imperishable one. Thus I do not run aimlessly; I do not fight as if I were shadowboxing. No, I drive my body and train it."</div>
+    <div class="verse-citation">1 Corinthians 9:25–27</div>
+    <div class="verse-reflection">Paul is describing an athlete's mindset two thousand years before sport psychology existed. You trained for football. You know what discipline costs. This is the same thing — with an eternal prize.</div>
+  </div>
+
+  <div class="verse-card">
+    <div class="verse-category">On the Man You're Becoming</div>
+    <div class="verse-text">"Finally, brothers, whatever is true, whatever is honorable, whatever is just, whatever is pure, whatever is lovely, whatever is gracious — if there is any excellence and if there is anything worthy of praise, think about these things."</div>
+    <div class="verse-citation">Philippians 4:8</div>
+    <div class="verse-reflection">This is your mental diet. What you feed your mind shapes what you become. The man she sees — the man your faith calls you to be — is built in moments like this one, when no one is watching.</div>
+  </div>
+
+  <!-- Augustine -->
+  <div class="section-label" style="margin-top:8px;">Augustine — Confessions</div>
+
+  <div class="augustine-card">
+    <div class="aug-label">✦ Confessions — Book I</div>
+    <div class="aug-text">"Thou madest us for Thyself, and our heart is restless, until it repose in Thee."</div>
+    <div class="aug-source">Saint Augustine, Confessions, Book I, Chapter 1</div>
+    <div class="aug-reflection">Augustine wrote this after years of chasing pleasure, ambition, and sin — and finding each one hollow. The restlessness you feel when you put down the pouch and don't know what to do with your hands? That is not withdrawal. That is your soul looking for something real. Give it something real.</div>
+  </div>
+
+  <div class="augustine-card">
+    <div class="aug-label">✦ Confessions — Book VIII</div>
+    <div class="aug-text">"I was bound, not with another's irons, but by my own iron will. My will the enemy held, and thence had made a chain for me, and bound me. For of a forward will, was a lust made; and a lust served, became custom; and custom not resisted, became necessity."</div>
+    <div class="aug-source">Saint Augustine, Confessions, Book VIII, Chapter 5</div>
+    <div class="aug-reflection">Augustine describing his own addiction — to lust, to habit, to the comfortable chains we choose. He is describing nicotine. He is describing weed. He wrote this sixteen centuries ago. The chains are the same. So is the way out: not willpower alone, but surrendering the will to something greater.</div>
+  </div>
+
+  <div class="augustine-card">
+    <div class="aug-label">✦ Confessions — Book X</div>
+    <div class="aug-text">"Our heart is restless until it rests in You. Late have I loved you, O Beauty ever ancient, ever new, late have I loved you! You were within me, but I was outside, and it was there that I searched for you."</div>
+    <div class="aug-source">Saint Augustine, Confessions, Book X, Chapter 27</div>
+    <div class="aug-reflection">He searched everywhere — pleasure, intellect, status — before finding what was already within him. You are 22. Augustine was 32 when he converted. You are not late. You are early. This is the best possible time to build your foundation.</div>
+  </div>
+
+  <!-- Catholic Stoic Motivation -->
+  <div class="section-label" style="margin-top:8px;">Faith &amp; Stoic Discipline</div>
+
+  <div class="motive-card">
+    <div class="motive-tag">Marcus Aurelius · Meditations</div>
+    <div class="motive-quote">"You have power over your mind, not outside events. Realize this, and you will find strength."</div>
+    <div class="motive-attr">— Marcus Aurelius, Emperor of Rome</div>
+    <div class="motive-body">A pagan emperor who never knew Christ, yet lived a life of radical self-discipline and duty. The Stoics and the Church Fathers read each other. Thomas Aquinas built his moral theology in conversation with Aristotle. You can honor Marcus and honor God — they both call you to master yourself before you can serve others. The craving does not control you. You do.</div>
+  </div>
+
+  <div class="motive-card">
+    <div class="motive-tag">Thomas Aquinas · On Virtue</div>
+    <div class="motive-quote">"The things that we love tell us what we are."</div>
+    <div class="motive-attr">— Saint Thomas Aquinas</div>
+    <div class="motive-body">What do you love? Football. Faith. Her. The man you used to be in that mirror. Let those things tell you who you are — not a pouch, not a habit, not comfort. Aquinas taught that virtue is not the absence of desire but the ordering of desire toward what is truly good. Order your desires. Train them like you trained on the field.</div>
+  </div>
+
+  <div class="motive-card">
+    <div class="motive-tag">On Leading Her Home</div>
+    <div class="motive-quote">"The soul that loves God has no need for anything else."</div>
+    <div class="motive-attr">— Saint John of the Cross</div>
+    <div class="motive-body">She is Lutheran. She loves Christ. That is the foundation. What she needs to see is not an argument — it is a man. A man whose faith is visible in how he treats his body, keeps his word, disciplines his habits, and loves with patience. Monica prayed for Augustine for thirty years. The witness of a life is louder than any theology debate. Be the witness. Let the rest belong to God.</div>
+  </div>
+
+  <div class="motive-card">
+    <div class="motive-tag">On This Exact Moment</div>
+    <div class="motive-quote">"Do not be overcome by evil, but overcome evil with good."</div>
+    <div class="motive-attr">— Romans 12:21</div>
+    <div class="motive-body">The craving is real. The discomfort is real. And your response to it — right now, in this moment — is the formation of your character. Every time you choose the run over the pouch, the prayer over the panic, the discipline over the comfort, you are becoming the man God designed at 6'4" with a heart that can carry more than weight plates.</div>
+  </div>
+
+</div>
+
+<!-- FUEL PAGE -->
+<div class="page" id="page-fuel">
+  <div class="section-label">Nutrition Protocol</div>
+
+  <div class="macro-grid">
+    <div class="macro-card"><div class="macro-label">Calories</div><div class="macro-value" style="color:var(--amber)">3,400</div><div class="macro-unit">kcal/day</div></div>
+    <div class="macro-card"><div class="macro-label">Protein</div><div class="macro-value" style="color:var(--green)">210</div><div class="macro-unit">grams</div></div>
+    <div class="macro-card"><div class="macro-label">Carbs</div><div class="macro-value" style="color:#6ab0e8">380</div><div class="macro-unit">grams</div></div>
+    <div class="macro-card"><div class="macro-label">Fat</div><div class="macro-value" style="color:#e8a84e">100</div><div class="macro-unit">grams</div></div>
+  </div>
+
+  <div class="card card-amber">
+    <div class="section-label">⚡ Creatine Protocol</div>
+    <div style="font-size:32px;font-weight:800;color:var(--amber);margin-bottom:4px;">5g daily</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.6;">Any time of day. Mix in water or shake. No loading phase needed. Take every single day — even rest days. Results compound over 4–6 weeks.</div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Meal Blueprint</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">BREAKFAST</div>
+        <div style="font-size:12px;color:var(--cream);line-height:1.5;">4 eggs + 2 egg whites · Oats with banana · Greek yogurt (plain) · Coffee</div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;">
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">LUNCH</div>
+        <div style="font-size:12px;color:var(--cream);line-height:1.5;">Ground beef or chicken rice bowl · Sweet potato · Broccoli or mixed greens</div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;">
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">PRE-WORKOUT</div>
+        <div style="font-size:12px;color:var(--cream);line-height:1.5;">Rice cakes + peanut butter · Protein shake · 60–90 min before training</div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;">
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">POST-WORKOUT</div>
+        <div style="font-size:12px;color:var(--cream);line-height:1.5;">50g protein shake · Apple · Handful almonds · Within 45 min</div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;">
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">DINNER</div>
+        <div style="font-size:12px;color:var(--cream);line-height:1.5;">Salmon or steak · White rice · Roasted vegetables</div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;">
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">BEFORE BED</div>
+        <div style="font-size:12px;color:var(--cream);line-height:1.5;">Cottage cheese or casein shake · Slow-digesting protein feeds overnight muscle repair</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <div class="section-label">✈️ Travel Week Strategy</div>
+    <div style="font-size:12px;color:var(--cream);line-height:1.7;">
+      Hit protein first — calories are secondary priority on travel days.<br/><br/>
+      <strong style="color:var(--teal);">Hotel breakfast:</strong> Eggs + protein shake. Always.<br/>
+      <strong style="color:var(--teal);">Pack:</strong> Individual creatine packets + protein bars.<br/>
+      <strong style="color:var(--teal);">Chipotle play:</strong> Double protein bowl = ~65g protein and fits macros perfectly.<br/>
+      <strong style="color:var(--teal);">Hotel gym:</strong> Dumbbells + bodyweight. The plan has hotel-safe days built in.
+    </div>
+  </div>
+
+  <div class="section-label">Supplement Stack</div>
+  <div class="card">
+    <div class="supp-row"><div><div class="supp-name">Creatine Monohydrate</div><div class="supp-timing">Anytime · daily · non-negotiable</div></div><div class="supp-dose">5g</div></div>
+    <div class="supp-row"><div><div class="supp-name">Whey Protein</div><div class="supp-timing">Post-workout + as needed</div></div><div class="supp-dose">1–2 scoops</div></div>
+    <div class="supp-row"><div><div class="supp-name">Vitamin D3</div><div class="supp-timing">Morning with food · ~$8/mo</div></div><div class="supp-dose">3,000 IU</div></div>
+    <div class="supp-row"><div><div class="supp-name">Fish Oil</div><div class="supp-timing">With meals · ~$12/mo</div></div><div class="supp-dose">2–3g</div></div>
+    <div class="supp-row"><div><div class="supp-name">Magnesium Glycinate</div><div class="supp-timing">Before bed — improves sleep + recovery</div></div><div class="supp-dose">400mg</div></div>
+  </div>
+
+  <div class="card" style="border-left: 3px solid var(--red);">
+    <div class="section-label" style="color:var(--red);">Skip These</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.8;">
+      ✕ Pre-workout blends — use coffee + creatine<br/>
+      ✕ Fat burners — unnecessary at your BF%<br/>
+      ✕ BCAAs — redundant at 210g protein<br/>
+      ✕ Testosterone boosters — you're 22, your T is fine
+    </div>
+  </div>
+</div>
+
+<!-- ALERTS PAGE -->
+<div class="page" id="page-notify">
+  <div class="section-label">Daily 5PM Alert Setup</div>
+
+  <div class="card card-amber" style="margin-bottom:16px;">
+    <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--cream);line-height:1.6;margin-bottom:6px;">"The secret of your future is hidden in your daily routine."</div>
+    <div style="font-size:11px;color:var(--amber);">— Mike Murdock</div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">iPhone Shortcut Setup — 5 Steps</div>
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-text">Open the <strong>Shortcuts</strong> app on your iPhone (comes pre-installed).</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-text">Tap <strong>Automation</strong> at the bottom → tap <code>+</code> → tap <strong>Time of Day</strong>.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-text">Set time to <code>5:00 PM</code> · Repeat: <strong>Daily</strong> · Run after confirming: <strong>Off</strong>.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-text">Tap <strong>New Blank Automation</strong> → search for <code>Show Notification</code> → add action.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div class="step-text">In the notification body, paste one of the messages below. Tap <strong>Done</strong>. You're live.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Paste-Ready 5PM Messages</div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+
+    <div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;">
+      <div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;">TAP TO COPY · MONDAY</div>
+      <div style="font-size:13px;color:var(--cream);line-height:1.6;">🏈 Nighthawk — 5PM check. You played football at UWEC. You carried a canoe through the BWCA. A nicotine craving is not your ceiling. Hit the gym. <em>"I can do all things through Christ who strengthens me."</em> — Phil 4:13</div>
+    </div>
+
+    <div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;">
+      <div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;">TAP TO COPY · TUESDAY</div>
+      <div style="font-size:13px;color:var(--cream);line-height:1.6;">🏃 Nighthawk — Run day. Augustine quit his habits cold. Marcus Aurelius governed an empire on discipline alone. You're quitting a pouch. Lace up. You are built for more than comfort.</div>
+    </div>
+
+    <div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;">
+      <div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;">TAP TO COPY · WEDNESDAY</div>
+      <div style="font-size:13px;color:var(--cream);line-height:1.6;">✝️ Nighthawk — Mid-week. She's watching who you're becoming, even when you don't notice. Be the man your faith calls you to be — not someday, tonight. Train. Pray. Rest clean.</div>
+    </div>
+
+    <div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;">
+      <div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;">TAP TO COPY · THURSDAY</div>
+      <div style="font-size:13px;color:var(--cream);line-height:1.6;">⚡ Nighthawk — Your body is a temple. Every clean day is an act of worship. Check your Hume Band. What does the data say? Honor what it's showing you. Let's go.</div>
+    </div>
+
+    <div class="card card-teal" onclick="copyText(this)" style="cursor:pointer;">
+      <div style="font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;">TAP TO COPY · FRIDAY</div>
+      <div style="font-size:13px;color:var(--cream);line-height:1.6;">🏋️ Nighthawk — End of week. You either earned the weekend or you didn't. The man you were at 215 lbs is not gone — he's waiting. Finish the week right. Train hard tonight.</div>
+    </div>
+
+    <div class="card card-amber" onclick="copyText(this)" style="cursor:pointer;">
+      <div style="font-size:9px;color:var(--amber);letter-spacing:2px;margin-bottom:8px;">TAP TO COPY · WEEKEND</div>
+      <div style="font-size:13px;color:var(--cream);line-height:1.6;">☀️ Nighthawk — Weekend. Rest is part of the program. Eat clean. Pray. Spend time with her. Monica prayed for Augustine for 30 years. You are being formed right now — even in the rest.</div>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="section-label">Add to iPhone Home Screen</div>
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-text">Open this file in <strong>Safari</strong> on your iPhone (not Chrome).</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-text">Tap the <strong>Share</strong> button (box with arrow) at the bottom of Safari.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-text">Scroll down and tap <strong>"Add to Home Screen"</strong>.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-text">Name it <code>Nighthawk</code> → tap <strong>Add</strong>. Done. Full-screen app on your home screen.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- DATA & LOGIC -->
+<script>
+const START_DATE = new Date('2026-07-07');
+
+const DAILY_VERSES = [
+  { text: "Do you not know that your body is a temple of the Holy Spirit within you? Glorify God in your body.", ref: "1 Corinthians 6:19–20" },
+  { text: "I can do all things through Christ who strengthens me.", ref: "Philippians 4:13" },
+  { text: "Have no anxiety at all, but in everything, by prayer and petition, make your requests known to God.", ref: "Philippians 4:6" },
+  { text: "No temptation has overtaken you except what is common to mankind. God will provide a way out.", ref: "1 Corinthians 10:13" },
+  { text: "Do not be overcome by evil, but overcome evil with good.", ref: "Romans 12:21" },
+  { text: "Whatever is true, whatever is honorable, whatever is just, whatever is pure — think about these things.", ref: "Philippians 4:8" },
+  { text: "I drive my body and train it, for fear that after proclaiming to others I myself should be disqualified.", ref: "1 Corinthians 9:27" },
+];
+
+const DAILY_MOTIVES = [
+  { text: "You have power over your mind, not outside events. Realize this, and you will find strength.", attr: "Marcus Aurelius" },
+  { text: "Thou madest us for Thyself, and our heart is restless until it repose in Thee.", attr: "St. Augustine — Confessions I" },
+  { text: "The things that we love tell us what we are.", attr: "St. Thomas Aquinas" },
+  { text: "Waste no more time arguing what a good man should be. Be one.", attr: "Marcus Aurelius" },
+  { text: "Our heart is restless until it rests in You. Late have I loved You, O Beauty ever ancient, ever new.", attr: "St. Augustine — Confessions X" },
+  { text: "You could leave life right now. Let that determine what you do and say and think.", attr: "Marcus Aurelius" },
+  { text: "The soul that loves God has no need for anything else.", attr: "St. John of the Cross" },
+];
+
+const WEEKS = [
+  { label: "WEEK 1 — Reactivation", theme: "Re-establish movement patterns. Moderate intensity. Form over weight.", hume: "Baseline HRV. Expect disruption from nicotine reduction.", days: [
+    { day:"MON", type:"strength", label:"CHEST + BACK", note:"Arnold Split Day 1. Push/pull superset style.", exercises:[{group:"Chest",opts:["★ Smith Machine Bench Press 4×8–10","○ Dumbbell Flat Press 4×10","○ Dumbbell Incline Press 4×10"]},{group:"Back",opts:["★ Pull-Ups 4×8","○ Smith Machine Bent Row 4×10","○ Dumbbell Single-Arm Row 4×10"]},{group:"Finisher",opts:["★ Battle Ropes 3×30 sec","○ Tricep Rope Pulldown 3×15"]}], cardio:null },
+    { day:"TUE", type:"cardio", label:"RUN DAY", note:"Easy pace. Build aerobic base.", exercises:[], cardio:{type:"Easy Run",dist:"2.5–3 miles",pace:"Conversational (~10–11 min/mi)",loc:"Trail or treadmill"} },
+    { day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"Arnold Split Day 2.", exercises:[{group:"Shoulders",opts:["★ Dumbbell Arnold Press 4×10","○ Lateral Raise 4×12","○ Front Raise 3×12"]},{group:"Biceps",opts:["★ Dumbbell Curl 4×10","○ Hammer Curl 3×12","○ Incline Curl 3×10"]},{group:"Triceps",opts:["★ Tricep Rope Pulldown 4×12","○ OH Dumbbell Extension 3×12","○ Close-Grip Smith Press 3×10"]}], cardio:null },
+    { day:"THU", type:"cardio", label:"RUN DAY", note:"Same as Tuesday. Consistency over speed.", exercises:[], cardio:{type:"Easy Run",dist:"2.5–3 miles",pace:"Conversational pace",loc:"Trail or treadmill"} },
+    { day:"FRI", type:"strength", label:"LEGS + CORE", note:"Arnold Split Day 3. Foundation movement.", exercises:[{group:"Legs",opts:["★ Smith Machine Squat 4×8–10","○ Dumbbell Romanian Deadlift 4×10","○ Dumbbell Walking Lunge 3×12 each"]},{group:"Core",opts:["★ Hanging Knee Raise 3×15","○ Plank 3×45 sec","○ Dumbbell Russian Twist 3×20"]}], cardio:null },
+    { day:"SAT", type:"cardio", label:"LONG RUN / HIKE", note:"Use Cincinnati trails. Low intensity, long duration.", exercises:[], cardio:{type:"Long Run or Hike",dist:"4–5 miles",pace:"Easy / enjoy it",loc:"Eden Park, Lunken Trail, or local hike"} },
+    { day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Walk, stretch, foam roll. Check Hume Band scores.", exercises:[], cardio:null },
+  ]},
+  { label: "WEEK 2 — Foundation", theme: "Increase intensity 10–15%. Nicotine cold turkey this week. Expect fatigue dip days 3–5.", hume: "HRV may dip mid-week during nicotine withdrawal. Rebound is coming.", days: [
+    { day:"MON", type:"strength", label:"CHEST + BACK", note:"Add 5–10 lbs to all pressing from Week 1.", exercises:[{group:"Chest",opts:["★ Smith Bench Press 4×8 (heavier)","○ Dumbbell Incline Press 4×10","○ Dumbbell Fly 3×12"]},{group:"Back",opts:["★ Pull-Ups 4×10","○ Smith Pendlay Row 4×8","○ DB Single-Arm Row 4×10"]},{group:"Finisher",opts:["★ Battle Ropes 4×30 sec","○ Tricep Pulldown 3×15"]}], cardio:null },
+    { day:"TUE", type:"cardio", label:"INTERVAL RUN", note:"Start adding tempo intervals.", exercises:[], cardio:{type:"Interval Run",dist:"3 miles total",pace:"1mi easy → 1mi tempo (8:30/mi) → 1mi cool-down",loc:"Treadmill or trail"} },
+    { day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"Add 1 extra set per group.", exercises:[{group:"Shoulders",opts:["★ Arnold Press 5×10","○ Lateral Raise 4×12","○ Rear Delt Fly 3×15"]},{group:"Biceps",opts:["★ DB Curl 4×10","○ Hammer Curl 4×12","○ Concentration Curl 3×10"]},{group:"Triceps",opts:["★ Rope Pulldown 4×12","○ OH DB Extension 4×12","○ Diamond Push-Ups 3×15"]}], cardio:null },
+    { day:"THU", type:"cardio", label:"EASY RUN", note:"Easy run if withdrawal fatigue is heavy. Listen to your body.", exercises:[], cardio:{type:"Easy Run",dist:"3 miles",pace:"Listen to your body today",loc:"Trail or treadmill"} },
+    { day:"FRI", type:"strength", label:"LEGS + CORE", note:"Push squat depth. Hamstring focus.", exercises:[{group:"Legs",opts:["★ Smith Squat 5×8","○ Romanian Deadlift 4×10","○ Bulgarian Split Squat 3×10 each"]},{group:"Calves",opts:["★ Standing Calf Raise 4×20","○ Seated Calf Raise 3×20"]},{group:"Core",opts:["★ Hanging Leg Raise 3×15","○ Ab Wheel Rollout 3×10","○ Plank 3×60 sec"]}], cardio:null },
+    { day:"SAT", type:"cardio", label:"LONG RUN", note:"Slightly longer than Week 1.", exercises:[], cardio:{type:"Long Run",dist:"5 miles",pace:"Easy pace",loc:"Trail preferred"} },
+    { day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Full rest. Sleep is training. Review Hume Band weekly trends.", exercises:[], cardio:null },
+  ]},
+  { label: "WEEK 3 — Build Phase", theme: "Nicotine-free. Energy returning. Push intensity. Body recalibrating.", hume: "HRV trending upward. RHR dropping. Sleep improving.", days: [
+    { day:"MON", type:"strength", label:"CHEST + BACK", note:"Progressive overload — heavier compounds.", exercises:[{group:"Chest",opts:["★ Smith Bench 5×6–8 (heavy)","○ Incline DB Press 4×10","○ Dumbbell Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups 4×8","○ Smith Bent Row 5×8","○ DB Pullover 3×12"]},{group:"Finisher",opts:["★ Battle Ropes 4×40 sec","○ Push-Up Burnout to failure"]}], cardio:null },
+    { day:"TUE", type:"cardio", label:"TEMPO RUN", note:"First real tempo push.", exercises:[], cardio:{type:"Tempo Run",dist:"3.5 miles",pace:"1mi easy → 1.5mi at 8:00/mi → 1mi cool-down",loc:"Treadmill or flat trail"} },
+    { day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"Volume and intensity both up.", exercises:[{group:"Shoulders",opts:["★ Arnold Press 5×10","○ Lateral Raise 5×12","○ Rear Delt Fly 4×15"]},{group:"Biceps",opts:["★ DB Curl 5×10","○ Hammer Curl 4×12","○ Incline Curl 3×10"]},{group:"Triceps",opts:["★ Rope Pulldown 5×12","○ OH Extension 4×12","○ Close-Grip Push-Up 3×15"]}], cardio:null },
+    { day:"THU", type:"strength", label:"CHEST + BACK (Hotel)", note:"Travel-friendly — dumbbells and bodyweight only.", exercises:[{group:"Chest",opts:["★ Push-Up Variations 4×15–20","○ DB Press on floor 4×12","○ DB Fly on floor 3×12"]},{group:"Back",opts:["★ DB Single-Arm Row 4×10","○ Resistance band rows 4×12","○ Superman Hold 3×20"]}], cardio:null },
+    { day:"FRI", type:"strength", label:"LEGS + CORE", note:"Add weight to everything. Your legs can handle more.", exercises:[{group:"Legs",opts:["★ Smith Squat 5×8 (heavier)","○ Romanian Deadlift 4×10","○ Bulgarian Split Squat 4×10 each"]},{group:"Core",opts:["★ Hanging Leg Raise 4×15","○ Ab Wheel 3×12","○ Side Plank 3×45 sec each"]}], cardio:null },
+    { day:"SAT", type:"cardio", label:"LONG RUN", note:"", exercises:[], cardio:{type:"Long Run",dist:"5.5 miles",pace:"Easy — conversational",loc:"Trail or treadmill"} },
+    { day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Mobility work. 10 min stretch minimum.", exercises:[], cardio:null },
+  ]},
+  { label: "WEEK 4 — Deload", theme: "Planned deload. Drop volume 40%. Let gains consolidate. You'll feel fresh for Week 5.", hume: "Highest HRV week so far. Confirm full recovery before Week 5 push.", days: [
+    { day:"MON", type:"strength", label:"CHEST + BACK (Light)", note:"60–70% of usual weight. Mind-muscle connection.", exercises:[{group:"Chest",opts:["★ Smith Bench 3×10 (light)","○ DB Fly 3×12"]},{group:"Back",opts:["★ Pull-Ups 3×8","○ DB Row 3×10"]}], cardio:null },
+    { day:"TUE", type:"cardio", label:"EASY RUN", note:"", exercises:[], cardio:{type:"Easy Run",dist:"3 miles",pace:"Very easy. Enjoy it.",loc:"Trail preferred"} },
+    { day:"WED", type:"strength", label:"SHOULDERS + ARMS (Light)", note:"Light weight, high reps, pump focus.", exercises:[{group:"Shoulders",opts:["★ Lateral Raise 3×15","○ Arnold Press 3×12 (light)"]},{group:"Arms",opts:["★ DB Curl 3×15","○ Rope Pulldown 3×15"]}], cardio:null },
+    { day:"THU", type:"rest", label:"ACTIVE RECOVERY", note:"Walk, swim, or light hike. No structured training.", exercises:[], cardio:null },
+    { day:"FRI", type:"strength", label:"LEGS (Light)", note:"", exercises:[{group:"Legs",opts:["★ Goblet Squat 3×12 (light)","○ Romanian Deadlift 3×12","○ Walking Lunge 3×10 each"]},{group:"Core",opts:["★ Plank 3×60 sec","○ Hanging Knee Raise 3×15"]}], cardio:null },
+    { day:"SAT", type:"cardio", label:"HIKE OR EASY RUN", note:"", exercises:[], cardio:{type:"Hike or Easy Run",dist:"4–5 miles",pace:"Very easy",loc:"Cincinnati trail — recharge mentally"} },
+    { day:"SUN", type:"rest", label:"FULL REST", note:"Sleep in. Eat well. You've earned it.", exercises:[], cardio:null },
+  ]},
+  { label: "WEEK 5 — Intensity Spike", theme: "Post-deload surge. Visible changes accelerating. Muscle memory firing on all cylinders.", hume: "Recovery scores high coming off deload. Green light to push hard.", days: [
+    { day:"MON", type:"strength", label:"CHEST + BACK", note:"Heaviest weights yet. Chase bench PRs.", exercises:[{group:"Chest",opts:["★ Smith Bench 5×5 (heavy)","○ Incline DB Press 5×8","○ DB Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups 5×8","○ Heavy DB Row 5×8","○ Smith Row 4×8"]},{group:"Finisher",opts:["★ Battle Ropes 5×40 sec","○ Push-Up Burnout"]}], cardio:null },
+    { day:"TUE", type:"cardio", label:"SPEED INTERVALS", note:"", exercises:[], cardio:{type:"Speed Intervals",dist:"3.5 miles total",pace:"400m hard / 400m easy × 6 rounds",loc:"Treadmill or track"} },
+    { day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"Arms visibly bigger by now. Push it.", exercises:[{group:"Shoulders",opts:["★ Arnold Press 6×10","○ Lateral Raise 5×12","○ Rear Delt Fly 4×15"]},{group:"Biceps",opts:["★ DB Curl 5×10","○ Hammer Curl 4×12","○ Concentration Curl 3×10"]},{group:"Triceps",opts:["★ Rope Pulldown 5×12","○ OH Extension 4×12","○ Dips 3×max"]}], cardio:null },
+    { day:"THU", type:"cardio", label:"TEMPO RUN", note:"", exercises:[], cardio:{type:"Tempo Run",dist:"4 miles",pace:"1mi easy → 2mi at 7:45–8:00/mi → 1mi cool-down",loc:"Trail or treadmill"} },
+    { day:"FRI", type:"strength", label:"LEGS + CORE", note:"Squat heavy. This is the week legs start changing.", exercises:[{group:"Legs",opts:["★ Smith Squat 5×5 (heaviest yet)","○ Romanian Deadlift 5×8","○ Bulgarian Split Squat 4×10 each"]},{group:"Core",opts:["★ Hanging Leg Raise 4×15","○ Ab Wheel 4×12","○ Plank 3×75 sec"]}], cardio:null },
+    { day:"SAT", type:"cardio", label:"LONG RUN", note:"First 5K goal pace check.", exercises:[], cardio:{type:"Long Run",dist:"6 miles",pace:"Easy-moderate",loc:"Trail"} },
+    { day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Check Hume Band weekly summary. Document progress.", exercises:[], cardio:null },
+  ]},
+  { label: "WEEK 6 — Peak Volume", theme: "Highest volume week. Abs visible. Shoulders filling out. You look noticeably different.", hume: "Monitor HRV closely — high volume week. If score drops below 70% of baseline, add rest day.", days: [
+    { day:"MON", type:"strength", label:"CHEST + BACK", note:"Volume and intensity both at peak.", exercises:[{group:"Chest",opts:["★ Smith Bench 6×5–8","○ Incline DB Press 5×10","○ DB Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups 5×8–10","○ DB Row 5×10","○ Smith Row 4×10"]}], cardio:null },
+    { day:"TUE", type:"cardio", label:"SPEED WORK", note:"", exercises:[], cardio:{type:"Speed Intervals",dist:"4 miles total",pace:"800m hard / 400m easy × 4 rounds",loc:"Track or treadmill"} },
+    { day:"WED", type:"strength", label:"SHOULDERS + ARMS", note:"", exercises:[{group:"Shoulders",opts:["★ Arnold Press 6×10","○ Lateral Raise 6×12","○ Rear Delt Fly 5×15"]},{group:"Biceps",opts:["★ DB Curl 5×10","○ Hammer Curl 5×12","○ 21s — 3 sets"]},{group:"Triceps",opts:["★ Rope Pulldown 5×12","○ OH Extension 5×12","○ Dips 4×max"]}], cardio:null },
+    { day:"THU", type:"cardio", label:"TEMPO RUN", note:"", exercises:[], cardio:{type:"Tempo Run",dist:"4.5 miles",pace:"1mi easy → 2.5mi at 7:30–7:45/mi → 1mi cool-down",loc:"Trail or treadmill"} },
+    { day:"FRI", type:"strength", label:"LEGS + CORE", note:"", exercises:[{group:"Legs",opts:["★ Smith Squat 6×5 (heaviest of program)","○ Romanian Deadlift 5×8","○ Bulgarian Split Squat 4×12"]},{group:"Core",opts:["★ Hanging Leg Raise 5×15","○ Ab Wheel 4×15","○ Plank 4×75 sec"]}], cardio:null },
+    { day:"SAT", type:"cardio", label:"LONG RUN", note:"Last mile at goal 5K pace.", exercises:[], cardio:{type:"Long Run",dist:"6.5 miles",pace:"Easy with final mile at race pace",loc:"Trail"} },
+    { day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Take progress photos this week. Compare to Week 1.", exercises:[], cardio:null },
+  ]},
+  { label: "WEEK 7 — Strength Peak", theme: "Chase PRs. Runs getting faster. Body composition visibly transformed.", hume: "HRV 20–30% above Week 1 average. Recovery locked in at new baseline.", days: [
+    { day:"MON", type:"strength", label:"CHEST + BACK — PR Week", note:"Go for personal bests on bench and row.", exercises:[{group:"Chest",opts:["★ Smith Bench 3×3 (PR attempt)","○ Incline DB Press 5×8","○ DB Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups max weight 5×5","○ DB Row max weight 5×8"]}], cardio:null },
+    { day:"TUE", type:"cardio", label:"5K TIME TRIAL", note:"Run your best 5K. Mid-program benchmark.", exercises:[], cardio:{type:"5K Time Trial",dist:"3.1 miles",pace:"All out — see what you've got",loc:"Treadmill or flat trail"} },
+    { day:"WED", type:"strength", label:"SHOULDERS + ARMS — PR", note:"", exercises:[{group:"Shoulders",opts:["★ Arnold Press 5×8 (heavy)","○ Lateral Raise 5×12","○ Rear Delt Fly 5×15"]},{group:"Biceps",opts:["★ DB Curl 5×8 (heavy)","○ Hammer Curl 4×10","○ Incline Curl 3×10"]},{group:"Triceps",opts:["★ Rope Pulldown 5×10 (heavy)","○ OH Extension 4×10","○ Dips 4×max"]}], cardio:null },
+    { day:"THU", type:"cardio", label:"EASY RECOVERY RUN", note:"Easy after 5K effort Tuesday.", exercises:[], cardio:{type:"Easy Run",dist:"3 miles",pace:"Very easy",loc:"Trail or treadmill"} },
+    { day:"FRI", type:"strength", label:"LEGS — Squat PR", note:"", exercises:[{group:"Legs",opts:["★ Smith Squat 3×3 (PR attempt)","○ Romanian Deadlift 5×6 (heavy)","○ Bulgarian Split Squat 4×10"]},{group:"Core",opts:["★ Hanging Leg Raise 5×15","○ Ab Wheel 4×15","○ Plank 3×90 sec"]}], cardio:null },
+    { day:"SAT", type:"cardio", label:"LONG RUN", note:"Celebrate how far you've come.", exercises:[], cardio:{type:"Long Run",dist:"7 miles",pace:"Easy",loc:"Trail"} },
+    { day:"SUN", type:"rest", label:"REST + RECOVERY", note:"Final week prep. Sleep hard. Eat clean.", exercises:[], cardio:null },
+  ]},
+  { label: "WEEK 8 — PRIME WEEK", theme: "Final push. This is why you started. You're back. Leave it all on the field.", hume: "Document final HRV, RHR, sleep scores. Compare to Week 1. The data tells the story.", days: [
+    { day:"MON", type:"strength", label:"CHEST + BACK — FINAL", note:"", exercises:[{group:"Chest",opts:["★ Smith Bench 5×5 (heavy and crisp)","○ Incline DB Press 5×10","○ DB Fly 4×12"]},{group:"Back",opts:["★ Weighted Pull-Ups 5×10","○ DB Row 5×10"]},{group:"Finisher",opts:["★ Battle Ropes 5×45 sec","○ Push-Up Burnout to failure"]}], cardio:null },
+    { day:"TUE", type:"cardio", label:"SPEED WORK — FINAL", note:"Push harder than Week 6. You're faster now.", exercises:[], cardio:{type:"Speed Intervals",dist:"4 miles",pace:"Push beyond Week 6 effort",loc:"Track or treadmill"} },
+    { day:"WED", type:"strength", label:"SHOULDERS + ARMS — FINAL", note:"", exercises:[{group:"Shoulders",opts:["★ Arnold Press 6×10","○ Lateral Raise 6×12","○ Rear Delt Fly 5×15"]},{group:"Biceps",opts:["★ DB Curl 6×10","○ Hammer Curl 5×12","○ 21s — 3 sets"]},{group:"Triceps",opts:["★ Rope Pulldown 6×12","○ OH Extension 5×12","○ Dips 5×max"]}], cardio:null },
+    { day:"THU", type:"cardio", label:"TEMPO RUN — FINAL", note:"", exercises:[], cardio:{type:"Tempo Run",dist:"5 miles",pace:"1mi easy → 3mi at 7:15–7:30/mi → 1mi cool-down",loc:"Trail or treadmill"} },
+    { day:"FRI", type:"strength", label:"LEGS — FINAL", note:"", exercises:[{group:"Legs",opts:["★ Smith Squat 5×5 (heaviest controllable)","○ Romanian Deadlift 5×8","○ Bulgarian Split Squat 5×10 each"]},{group:"Core",opts:["★ Hanging Leg Raise 5×20","○ Ab Wheel 5×15","○ Plank 3×90 sec"]}], cardio:null },
+    { day:"SAT", type:"cardio", label:"FINAL 5K TIME TRIAL", note:"Your real benchmark. You will be faster.", exercises:[], cardio:{type:"5K Time Trial",dist:"3.1 miles",pace:"All out. Leave nothing behind.",loc:"Trail or treadmill"} },
+    { day:"SUN", type:"rest", label:"CELEBRATE + REFLECT", note:"Take final photos. Compare Week 1 vs Week 8 Hume Band data. You did it.", exercises:[], cardio:null },
+  ]},
+];
+
+// ── Page nav ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+}
+
+// ── Date + day counter ──
+function updateDate() {
+  const now = new Date();
+  const dayNum = Math.max(1, Math.floor((now - START_DATE) / 86400000) + 1);
+  const weekNum = Math.min(8, Math.ceil(dayNum / 7));
+  document.getElementById('dateBadge').innerHTML =
+    now.toLocaleDateString('en-US', {month:'short',day:'numeric'}) +
+    `<br/><span>Week ${weekNum} · Day ${dayNum}</span>`;
+}
+
+// ── Today verse + motive ──
+function loadToday() {
+  const idx = new Date().getDay(); // 0–6
+  const v = DAILY_VERSES[idx % DAILY_VERSES.length];
+  const m = DAILY_MOTIVES[idx % DAILY_MOTIVES.length];
+  document.getElementById('todayVerse').textContent = `"${v.text}"`;
+  document.getElementById('todayVerseRef').textContent = v.ref;
+  document.getElementById('todayMotive').textContent = `"${m.text}"`;
+  document.getElementById('todayMotiveAttr').textContent = `— ${m.attr}`;
+
+  // Today's workout
+  const now = new Date();
+  const dayNum = Math.max(0, Math.floor((now - START_DATE) / 86400000));
+  const weekIdx = Math.min(7, Math.floor(dayNum / 7));
+  const dayOfWeek = now.getDay(); // 0=Sun
+  const dayMap = [6,0,1,2,3,4,5]; // Sun→index6, Mon→0...
+  const dIdx = dayMap[dayOfWeek];
+  const todayDay = WEEKS[weekIdx].days[dIdx];
+  const wkLabel = document.getElementById('todayWorkout');
+  if (todayDay) {
+    const typeColor = todayDay.type === 'strength' ? 'var(--amber)' : todayDay.type === 'cardio' ? 'var(--teal)' : 'var(--muted)';
+    let html = `<div style="color:${typeColor};font-weight:700;font-size:14px;margin-bottom:4px;">${todayDay.label}</div>`;
+    if (todayDay.note) html += `<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${todayDay.note}</div>`;
+    if (todayDay.cardio) {
+      html += `<div style="font-size:12px;color:var(--cream);">📏 ${todayDay.cardio.dist}<br/>⏱ ${todayDay.cardio.pace}<br/><span style="color:var(--muted);">📍 ${todayDay.cardio.loc}</span></div>`;
+    }
+    if (todayDay.exercises.length) {
+      todayDay.exercises.slice(0,2).forEach(ex => {
+        html += `<div style="margin-top:8px;font-size:10px;color:var(--amber);letter-spacing:2px;">${ex.group.toUpperCase()}</div>`;
+        html += `<div style="font-size:12px;color:var(--cream);">${ex.opts[0].replace('★ ','')}</div>`;
+      });
+    }
+    wkLabel.innerHTML = html;
+  }
+}
+
+// ── Plan page ──
+let currentWeek = 0;
+function buildPlan() {
+  const scroller = document.getElementById('weekScroller');
+  scroller.innerHTML = WEEKS.map((w,i) =>
+    `<button class="week-pill${i===0?' active':''}" onclick="selectWeek(${i})" id="pill-${i}">${i+1}</button>`
+  ).join('');
+  renderWeek(0);
+}
+
+function selectWeek(i) {
+  currentWeek = i;
+  document.querySelectorAll('.week-pill').forEach(p => p.classList.remove('active'));
+  document.getElementById('pill-' + i).classList.add('active');
+  renderWeek(i);
+}
+
+function renderWeek(i) {
+  const w = WEEKS[i];
+  let html = `<div class="week-theme">
+    <div class="week-name">${w.label}</div>
+    <div class="week-desc">${w.theme}</div>
+    <div class="hume-box"><div class="hume-label">⌚ HUME BAND</div><div class="hume-text">${w.hume}</div></div>
+  </div>`;
+
+  w.days.forEach((day, di) => {
+    const tagClass = day.type === 'strength' ? 'tag-strength' : day.type === 'cardio' ? 'tag-cardio' : 'tag-rest';
+    const typeEmoji = day.type === 'strength' ? '💪' : day.type === 'cardio' ? '🏃' : '😴';
+    html += `<div class="day-row">
+      <button class="day-header" onclick="toggleDay('d-${i}-${di}')">
+        <span class="day-tag ${tagClass}">${day.day}</span>
+        <span>
+          <div class="day-title">${day.label}</div>
+          <div class="day-sub">${typeEmoji} ${day.type.toUpperCase()}</div>
+        </span>
+        <span class="day-chevron" id="chev-d-${i}-${di}">›</span>
+      </button>
+      <div class="day-body" id="d-${i}-${di}">`;
+    if (day.note) html += `<div class="day-note">${day.note}</div>`;
+    if (day.cardio) {
+      html += `<div class="cardio-box">
+        <div class="cardio-title">${day.cardio.type}</div>
+        <div class="cardio-row">📏 ${day.cardio.dist}</div>
+        <div class="cardio-row">⏱ ${day.cardio.pace}</div>
+        <div class="cardio-loc">📍 ${day.cardio.loc}</div>
+      </div>`;
+    }
+    day.exercises.forEach(ex => {
+      html += `<div class="exercise-group"><div class="ex-group-label">${ex.group}</div>`;
+      ex.opts.forEach((opt,oi) => {
+        const isPrimary = opt.startsWith('★');
+        const label = opt.replace('★ ','').replace('○ ','');
+        html += `<div class="ex-option">
+          <span class="ex-star">${isPrimary ? '★' : '○'}</span>
+          <span class="ex-text ${isPrimary ? 'primary' : 'alt'}">${isPrimary ? '<strong>'+label+'</strong>' : label}</span>
+        </div>`;
+      });
+      html += `</div>`;
+    });
+    html += `</div></div>`;
+  });
+  document.getElementById('weekContent').innerHTML = html;
+}
+
+function toggleDay(id) {
+  const body = document.getElementById(id);
+  const chev = document.getElementById('chev-' + id);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chev.classList.toggle('open', !isOpen);
+}
+
+// ── Copy text ──
+function copyText(el) {
+  const text = el.querySelector('div:last-child').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const label = el.querySelector('div:first-child');
+    const orig = label.textContent;
+    label.textContent = '✓ COPIED!';
+    setTimeout(() => label.textContent = orig, 1500);
+  });
+}
+
+// ── Init ──
+updateDate();
+loadToday();
+buildPlan();
+
+// Auto-scroll to current week on plan load
+const initNow = new Date();
+const initDayNum = Math.max(0, Math.floor((initNow - START_DATE) / 86400000));
+const autoWeek = Math.min(7, Math.floor(initDayNum / 7));
+if (autoWeek > 0) setTimeout(() => selectWeek(autoWeek), 100);
+</script>
+</body>
+</html>
