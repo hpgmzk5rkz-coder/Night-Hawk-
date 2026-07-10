@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Nighthawk"/>
+<meta name="theme-color" content="#0a0e1a"/>
+<title>Project Nighthawk</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0a0e1a;
+    --navy2: #111827;
+    --card: #161d2e;
+    --card2: #1c2440;
+    --amber: #c8a96e;
+    --teal: #4ecdc4;
+    --cream: #e8e4d9;
+    --muted: #6b7a99;
+    --steel: #3a4155;
+    --red: #e05c5c;
+    --green: #5cb85c;
+    --border: #1e2840;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-bottom: calc(80px + var(--safe-bottom));
+  }
+  .app-header {
+    background: var(--navy);
+    padding: calc(var(--safe-top) + 16px) 20px 0;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .app-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: var(--cream); letter-spacing: -0.5px; line-height: 1; }
+  .app-subtitle { font-size: 10px; color: var(--amber); letter-spacing: 3px; text-transform: uppercase; margin-top: 3px; }
+  .date-badge { text-align: right; font-size: 10px; color: var(--muted); line-height: 1.6; }
+  .date-badge span { color: var(--amber); font-weight: 600; }
+  .horizon-line { height: 2px; background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--teal) 60%, transparent); }
+
+  /* NAV */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--navy2); border-top: 1px solid var(--border);
+    display: flex; padding-bottom: var(--safe-bottom); z-index: 200;
+  }
+  .nav-btn {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 10px 4px 8px; background: none; border: none;
+    color: var(--muted); font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; cursor: pointer; transition: color 0.2s; gap: 4px;
+  }
+  .nav-btn.active { color: var(--amber); }
+  .nav-icon { font-size: 18px; line-height: 1; }
+
+  /* PAGES */
+  .page { display: none; padding: 16px; }
+  .page.active { display: block; }
+
+  /* CARDS */
+  .card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; }
+  .card-amber { border-left: 3px solid var(--amber); }
+  .card-teal { border-left: 3px solid var(--teal); }
+  .card-green { border-left: 3px solid var(--green); }
+  .section-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; font-weight: 600; }
+  .today-verse { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; line-height: 1.7; color: var(--cream); margin-bottom: 8px; }
+  .verse-ref { font-size: 11px; color: var(--amber); letter-spacing: 1px; }
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .macro-card { background: var(--card2); border-radius: 10px; padding: 12px; border: 1px solid var(--border); }
+  .macro-label { font-size: 9px; letter-spacing: 2px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
+  .macro-value { font-size: 26px; font-weight: 800; line-height: 1; }
+  .macro-unit { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* WORKOUT LOGGER */
+  .muscle-group-card {
+    background: var(--card2); border-radius: 12px; border: 1px solid var(--border);
+    margin-bottom: 12px; overflow: hidden;
+  }
+  .muscle-group-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; cursor: pointer; user-select: none;
+  }
+  .muscle-group-title { font-size: 14px; font-weight: 700; color: var(--cream); }
+  .muscle-group-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .muscle-chevron { color: var(--amber); font-size: 18px; transition: transform 0.2s; }
+  .muscle-chevron.open { transform: rotate(90deg); }
+  .muscle-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
+  .muscle-body.open { display: block; }
+
+  /* EXERCISE SELECTOR */
+  .exercise-select-label { font-size: 10px; color: var(--amber); letter-spacing: 2px; text-transform: uppercase; margin: 12px 0 6px; }
+  .exercise-picker { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--cream); font-size: 13px; padding: 10px 12px; appearance: none; font-family: 'Inter', sans-serif; }
+  .exercise-picker:focus { outline: none; border-color: var(--amber); }
+
+  /* VOLUME LOGGER */
+  .volume-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+  .vol-input-group { display: flex; flex-direction: column; gap: 4px; }
+  .vol-label { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .vol-input {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    color: var(--cream); font-size: 16px; font-weight: 700; padding: 10px 8px;
+    text-align: center; width: 100%; font-family: 'Inter', sans-serif;
+  }
+  .vol-input:focus { outline: none; border-color: var(--amber); }
+  .vol-total { font-size: 11px; color: var(--teal); margin-top: 4px; font-weight: 600; }
+
+  /* LAST SESSION */
+  .last-session-box {
+    background: #0d1520; border-left: 3px solid var(--amber);
+    border-radius: 8px; padding: 10px 12px; margin: 8px 0;
+  }
+  .last-session-label { font-size: 9px; color: var(--amber); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .last-session-row { font-size: 12px; color: var(--cream); margin-bottom: 3px; }
+  .last-session-vol { font-size: 11px; color: var(--teal); margin-top: 4px; }
+
+  /* LOG BUTTON */
+  .log-btn {
+    width: 100%; padding: 12px; border-radius: 10px; border: none;
+    background: var(--amber); color: #000; font-size: 13px; font-weight: 800;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    margin-top: 10px; font-family: 'Inter', sans-serif;
+    transition: opacity 0.2s;
+  }
+  .log-btn:active { opacity: 0.8; }
+  .log-btn.saved { background: var(--green); color: #fff; }
+
+  /* WEEK SELECTOR */
+  .week-scroller { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
+  .week-scroller::-webkit-scrollbar { display: none; }
+  .week-pill {
+    flex-shrink: 0; width: 38px; height: 38px; border-radius: 10px;
+    border: 1.5px solid var(--border); background: var(--card); color: var(--muted);
+    font-weight: 700; font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .week-pill.active { background: var(--amber); color: #000; border-color: var(--amber); }
+
+  /* DAY ROWS (Plan tab) */
+  .day-row { background: var(--card); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 8px; overflow: hidden; }
+  .day-header { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; width: 100%; background: none; border: none; text-align: left; }
+  .day-tag { flex-shrink: 0; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+  .tag-strength { background: var(--amber); color: #000; }
+  .tag-cardio { background: var(--teal); color: #000; }
+  .tag-rest { background: var(--steel); color: var(--cream); }
+  .day-title { font-size: 13px; font-weight: 700; color: var(--cream); }
+  .day-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .day-chevron { margin-left: auto; color: var(--amber); font-size: 16px; transition: transform 0.2s; }
+  .day-chevron.open { transform: rotate(90deg); }
+  .day-body { padding: 0 14px 14px; border-top: 1px solid var(--border); display: none; }
+  .day-body.open { display: block; }
+  .day-note { font-size: 11px; color: var(--muted); padding: 10px 0 8px; line-height: 1.6; }
+  .cardio-box { background: #0d1a18; border-left: 3px solid var(--teal); border-radius: 8px; padding: 12px; margin-top: 10px; }
+  .cardio-title { color: var(--teal); font-weight: 700; font-size: 13px; margin-bottom: 8px; }
+  .cardio-row { font-size: 12px; color: var(--cream); margin-bottom: 4px; }
+
+  /* FAITH */
+  .faith-hero { background: linear-gradient(135deg, #0d1520 0%, #0a0e1a 100%); border-radius: 12px; border: 1px solid var(--border); padding: 20px; margin-bottom: 16px; text-align: center; }
+  .cross { font-size: 32px; margin-bottom: 10px; }
+  .faith-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--cream); margin-bottom: 6px; }
+  .faith-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .verse-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 18px; margin-bottom: 12px; }
+  .verse-category { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; font-weight: 600; }
+  .verse-text { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; line-height: 1.75; color: var(--cream); margin-bottom: 8px; }
+  .verse-citation { font-size: 11px; color: var(--amber); letter-spacing: 1px; }
+  .verse-reflection { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .augustine-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 18px; margin-bottom: 12px; border-top: 2px solid var(--amber); }
+  .aug-label { font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 10px; }
+  .aug-text { font-family: 'Playfair Display', serif; font-size: 14px; font-style: italic; line-height: 1.8; color: var(--cream); margin-bottom: 8px; }
+  .aug-source { font-size: 10px; color: var(--muted); margin-bottom: 10px; }
+  .aug-reflection { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .motive-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 18px; margin-bottom: 12px; }
+  .motive-tag { font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 10px; }
+  .motive-quote { font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.65; color: var(--cream); margin-bottom: 6px; }
+  .motive-attr { font-size: 11px; color: var(--amber); }
+  .motive-body { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  /* FUEL */
+  .supp-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 8px; }
+  .supp-row:last-child { border-bottom: none; }
+  .supp-name { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 3px; }
+  .supp-timing { font-size: 11px; color: var(--muted); }
+  .supp-dose { font-size: 12px; color: var(--amber); font-weight: 700; flex-shrink: 0; }
+
+  /* HISTORY */
+  .history-entry { background: var(--card2); border-radius: 10px; border: 1px solid var(--border); padding: 12px; margin-bottom: 8px; }
+  .history-date { font-size: 10px; color: var(--amber); letter-spacing: 1px; margin-bottom: 6px; }
+  .history-muscle { font-size: 13px; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+  .history-detail { font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .history-vol { font-size: 12px; color: var(--teal); font-weight: 600; margin-top: 4px; }
+  .clear-btn { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--red); background: transparent; color: var(--red); font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="header-top">
+    <div>
+      <div class="app-title">Project Nighthawk</div>
+      <div class="app-subtitle">Training · Faith · Discipline</div>
+    </div>
+    <div class="date-badge" id="dateBadge">Loading...<br/><span>Day 1</span></div>
+  </div>
+  <div class="horizon-line"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-btn active" onclick="showPage('today')" id="nav-today"><span class="nav-icon">⚡</span>TODAY</button>
+  <button class="nav-btn" onclick="showPage('train')" id="nav-train"><span class="nav-icon">💪</span>TRAIN</button>
+  <button class="nav-btn" onclick="showPage('plan')" id="nav-plan"><span class="nav-icon">📋</span>PLAN</button>
+  <button class="nav-btn" onclick="showPage('faith')" id="nav-faith"><span class="nav-icon">✝️</span>FAITH</button>
+  <button class="nav-btn" onclick="showPage('fuel')" id="nav-fuel"><span class="nav-icon">🥗</span>FUEL</button>
+</div>
+
+<!-- ═══════════════ TODAY PAGE ═══════════════ -->
+<div class="page active" id="page-today">
+  <div class="card card-teal">
+    <div class="section-label">Today's Word</div>
+    <div class="today-verse" id="todayVerse">Loading...</div>
+    <div class="verse-ref" id="todayVerseRef"></div>
+  </div>
+  <div class="card card-amber">
+    <div class="section-label">Daily Fire</div>
+    <div class="today-verse" id="todayMotive" style="font-size:14px;"></div>
+    <div class="verse-ref" id="todayMotiveAttr" style="margin-top:6px;"></div>
+  </div>
+  <div class="card">
+    <div class="section-label">Today's Session</div>
+    <div id="todayWorkout">Loading...</div>
+  </div>
+  <div class="section-label" style="padding:0 4px;">Daily Targets</div>
+  <div class="macro-grid">
+    <div class="macro-card"><div class="macro-label">Calories</div><div class="macro-value" style="color:var(--amber)">3,400</div><div class="macro-unit">kcal</div></div>
+    <div class="macro-card"><div class="macro-label">Protein</div><div class="macro-value" style="color:var(--green)">210g</div><div class="macro-unit">minimum</div></div>
+    <div class="macro-card"><div class="macro-label">Creatine</div><div class="macro-value" style="color:var(--teal)">5g</div><div class="macro-unit">daily</div></div>
+    <div class="macro-card"><div class="macro-label">Water</div><div class="macro-value" style="color:#6ab0e8">1 gal</div><div class="macro-unit">minimum</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TRAIN PAGE ═══════════════ -->
+<div class="page" id="page-train">
+  <div class="section-label">Workout Logger</div>
+  <div id="trainContent"></div>
+</div>
+
+<!-- ═══════════════ PLAN PAGE ═══════════════ -->
+<div class="page" id="page-plan">
+  <div class="section-label">8-Week Program</div>
+  <div class="week-scroller" id="weekScroller"></div>
+  <div id="weekContent"></div>
+</div>
+
+<!-- ═══════════════ FAITH PAGE ═══════════════ -->
+<div class="page" id="page-faith">
+  <div class="faith-hero">
+    <div class="cross">✝</div>
+    <div class="faith-title">Faith & Discipline</div>
+    <div class="faith-sub">The body is a temple. Train it accordingly.<br/>Strength built in discipline. Character forged in difficulty.</div>
+  </div>
+
+  <div class="section-label">Scripture</div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Physical Discipline</div>
+    <div class="verse-text">"Do you not know that your body is a temple of the Holy Spirit within you, which you have from God, and that you are not your own? For you were bought with a price; therefore glorify God in your body."</div>
+    <div class="verse-citation">1 Corinthians 6:19–20</div>
+    <div class="verse-reflection">Every rep, every mile, every clean meal is an act of worship. You are not just building a body — you are stewarding something that was given to you. Train like it matters. Because it does.</div>
+  </div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Perseverance</div>
+    <div class="verse-text">"I can do all things through Christ who strengthens me."</div>
+    <div class="verse-citation">Philippians 4:13</div>
+    <div class="verse-reflection">Not a bumper sticker. A statement made by a man writing from prison, who had been beaten, shipwrecked, and starved. If Paul could have peace in chains, you can finish the set.</div>
+  </div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Discipline</div>
+    <div class="verse-text">"Every athlete exercises discipline in every way. They do it to win a perishable crown, but we an imperishable one. No, I drive my body and train it."</div>
+    <div class="verse-citation">1 Corinthians 9:25–27</div>
+    <div class="verse-reflection">Paul is describing an athlete's mindset two thousand years before sport psychology existed. You know what discipline costs. This is the same thing — with an eternal prize.</div>
+  </div>
+
+  <div class="verse-card">
+    <div class="verse-category">On Consistency</div>
+    <div class="verse-text">"Whatever is true, whatever is honorable, whatever is just, whatever is pure, whatever is lovely — think about these things."</div>
+    <div class="verse-citation">Philippians 4:8</div>
+    <div class="verse-reflection">What you feed your mind shapes what you become. The man you are becoming is built in moments like this one, when no one is watching and you show up anyway.</div>
+  </div>
+
+  <div class="section-label" style="margin-top:8px;">Augustine — Confessions</div>
+
+  <div class="augustine-card">
+    <div class="aug-label">✦ Confessions — Book I</div>
+    <div class="aug-text">"Thou madest us for Thyself, and our heart is restless, until it repose in Thee."</div>
+    <div class="aug-source">Saint Augustine, Confessions, Book I, Chapter 1</div>
+    <div class="aug-reflection">The restlessness that drives you into the gym, onto the track, into the work — that is not weakness. That is design. Channel it toward what is real and lasting.</div>
+  </div>
+
+  <div class="augustine-card">
+    <div class="aug-label">✦ Confessions — Book VIII</div>
+    <div class="aug-text">"I was bound, not with another's irons, but by my own iron will. For of a forward will, was a lust made; and a lust served, became custom; and custom not resisted, became necessity."</div>
+    <div class="aug-source">Saint Augustine, Confessions, Book VIII, Chapter 5</div>
+    <div class="aug-reflection">Augustine describing habit and addiction sixteen centuries before neuroscience confirmed it. Every good habit you build — training, sleep, clean eating — is replacing a chain with a foundation.</div>
+  </div>
+
+  <div class="section-label" style="margin-top:8px;">Stoic & Classical Discipline</div>
+
+  <div class="motive-card">
+    <div class="motive-tag">Marcus Aurelius · Meditations</div>
+    <div class="motive-quote">"You have power over your mind, not outside events. Realize this, and you will find strength."</div>
+    <div class="motive-attr">— Marcus Aurelius, Emperor of Rome</div>
+    <div class="motive-body">A man who governed an empire, led armies, and buried children — and still showed up every morning to do his duty. Discipline is not what you do when you feel like it. It is what you do when you don't. That is the whole secret.</div>
+  </div>
+
+  <div class="motive-card">
+    <div class="motive-tag">Thomas Aquinas · On Virtue</div>
+    <div class="motive-quote">"The things that we love tell us what we are."</div>
+    <div class="motive-attr">— Saint Thomas Aquinas</div>
+    <div class="motive-body">What do you love? Excellence. Strength. Faith. Hard work. Let those things define you — not comfort, not convenience, not the path of least resistance. Aquinas taught that virtue is not the absence of desire but the ordering of desire toward what is truly good.</div>
+  </div>
+
+  <div class="motive-card">
+    <div class="motive-tag">On This Exact Moment</div>
+    <div class="motive-quote">"Do not be overcome by evil, but overcome evil with good."</div>
+    <div class="motive-attr">— Romans 12:21</div>
+    <div class="motive-body">The resistance is real. The discomfort is real. And your response to it — right now, in this moment — is the formation of your character. Every time you choose discipline over comfort, you are becoming the man you were built to be.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ FUEL PAGE ═══════════════ -->
+<div class="page" id="page-fuel">
+  <div class="section-label">Nutrition Protocol</div>
+  <div class="macro-grid">
+    <div class="macro-card"><div class="macro-label">Calories</div><div class="macro-value" style="color:var(--amber)">3,400</div><div class="macro-unit">kcal/day</div></div>
+    <div class="macro-card"><div class="macro-label">Protein</div><div class="macro-value" style="color:var(--green)">210</div><div class="macro-unit">grams</div></div>
+    <div class="macro-card"><div class="macro-label">Carbs</div><div class="macro-value" style="color:#6ab0e8">380</div><div class="macro-unit">grams</div></div>
+    <div class="macro-card"><div class="macro-label">Fat</div><div class="macro-value" style="color:#e8a84e">100</div><div class="macro-unit">grams</div></div>
+  </div>
+  <div class="card card-amber">
+    <div class="section-label">⚡ Creatine Protocol</div>
+    <div style="font-size:32px;font-weight:800;color:var(--amber);margin-bottom:4px;">5g daily</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.6;">Any time of day. Every single day — even rest days. Results compound over 4–6 weeks.</div>
+  </div>
+  <div class="card">
+    <div class="section-label">Meal Blueprint</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div><div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">BREAKFAST</div><div style="font-size:12px;color:var(--cream);line-height:1.5;">4 eggs + 2 egg whites · Oats with banana · Greek yogurt · Coffee</div></div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;"><div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">LUNCH</div><div style="font-size:12px;color:var(--cream);line-height:1.5;">Ground beef or chicken rice bowl · Sweet potato · Broccoli</div></div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;"><div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">PRE-WORKOUT</div><div style="font-size:12px;color:var(--cream);line-height:1.5;">Rice cakes + peanut butter · Protein shake · 60–90 min before</div></div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;"><div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">POST-WORKOUT</div><div style="font-size:12px;color:var(--cream);line-height:1.5;">50g protein shake · Apple · Handful almonds · Within 45 min</div></div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;"><div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">DINNER</div><div style="font-size:12px;color:var(--cream);line-height:1.5;">Salmon or steak · White rice · Roasted vegetables</div></div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;"><div style="font-size:11px;color:var(--amber);font-weight:600;margin-bottom:3px;">BEFORE BED</div><div style="font-size:12px;color:var(--cream);line-height:1.5;">Cottage cheese or casein shake · Slow-digesting protein for overnight repair</div></div>
+    </div>
+  </div>
+  <div class="section-label">Supplement Stack</div>
+  <div class="card">
+    <div class="supp-row"><div><div class="supp-name">Creatine Monohydrate</div><div class="supp-timing">Anytime · daily · non-negotiable</div></div><div class="supp-dose">5g</div></div>
+    <div class="supp-row"><div><div class="supp-name">Whey Protein</div><div class="supp-timing">Post-workout + as needed</div></div><div class="supp-dose">1–2 scoops</div></div>
+    <div class="supp-row"><div><div class="supp-name">Vitamin D3</div><div class="supp-timing">Morning with food</div></div><div class="supp-dose">3,000 IU</div></div>
+    <div class="supp-row"><div><div class="supp-name">Fish Oil</div><div class="supp-timing">With meals</div></div><div class="supp-dose">2–3g</div></div>
+    <div class="supp-row"><div><div class="supp-name">Magnesium Glycinate</div><div class="supp-timing">Before bed — sleep + recovery</div></div><div class="supp-dose">400mg</div></div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--red);">
+    <div class="section-label" style="color:var(--red);">Skip These</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.8;">✕ Pre-workout blends — use coffee + creatine<br/>✕ Fat burners — unnecessary<br/>✕ BCAAs — redundant at 210g protein<br/>✕ Testosterone boosters — you're 22, your T is fine</div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const START_DATE = new Date('2026-07-07');
+
+const DAILY_VERSES = [
+  { text: "Do you not know that your body is a temple of the Holy Spirit? Glorify God in your body.", ref: "1 Corinthians 6:19–20" },
+  { text: "I can do all things through Christ who strengthens me.", ref: "Philippians 4:13" },
+  { text: "No temptation has overtaken you except what is common to mankind. God will provide a way out.", ref: "1 Corinthians 10:13" },
+  { text: "Do not be overcome by evil, but overcome evil with good.", ref: "Romans 12:21" },
+  { text: "Whatever is true, whatever is honorable, whatever is pure — think about these things.", ref: "Philippians 4:8" },
+  { text: "I drive my body and train it, for fear that I myself should be disqualified.", ref: "1 Corinthians 9:27" },
+  { text: "Commit your work to the Lord, and your plans will be established.", ref: "Proverbs 16:3" },
+];
+
+const DAILY_MOTIVES = [
+  { text: "You have power over your mind, not outside events. Realize this, and you will find strength.", attr: "Marcus Aurelius" },
+  { text: "Thou madest us for Thyself, and our heart is restless, until it repose in Thee.", attr: "St. Augustine" },
+  { text: "The things that we love tell us what we are.", attr: "St. Thomas Aquinas" },
+  { text: "Waste no more time arguing what a good man should be. Be one.", attr: "Marcus Aurelius" },
+  { text: "We suffer more in imagination than in reality.", attr: "Seneca" },
+  { text: "You could leave life right now. Let that determine what you do and say and think.", attr: "Marcus Aurelius" },
+  { text: "The soul that loves God has no need for anything else.", attr: "St. John of the Cross" },
+];
+
+// MUSCLE GROUPS per day type with exercise options
+const MUSCLE_GROUPS = {
+  'Chest + Back': [
+    {
+      name: 'Chest', exercises: [
+        'Smith Machine Bench Press','Dumbbell Flat Press','Dumbbell Incline Press',
+        'Cable Fly','Dumbbell Fly','Push-Up Variations','Dumbbell Decline Press'
+      ]
+    },
+    {
+      name: 'Back', exercises: [
+        'Pull-Ups','Smith Machine Bent Row','Dumbbell Single-Arm Row',
+        'Cable Row','Lat Pulldown','Dumbbell Pullover','T-Bar Row'
+      ]
+    },
+    {
+      name: 'Finisher', exercises: [
+        'Battle Ropes','Tricep Rope Pulldown','Push-Up Burnout',
+        'Face Pull','Band Pull-Apart'
+      ]
+    },
+  ],
+  'Shoulders + Arms': [
+    {
+      name: 'Shoulders', exercises: [
+        'Dumbbell Arnold Press','Lateral Raise','Front Raise',
+        'Rear Delt Fly','Overhead Press','Cable Lateral Raise','Upright Row'
+      ]
+    },
+    {
+      name: 'Biceps', exercises: [
+        'Dumbbell Curl','Hammer Curl','Incline Curl',
+        'Concentration Curl','Cable Curl','Barbell Curl','21s'
+      ]
+    },
+    {
+      name: 'Triceps', exercises: [
+        'Tricep Rope Pulldown','OH Dumbbell Extension','Close-Grip Smith Press',
+        'Diamond Push-Ups','Dips','Cable Overhead Extension','Skull Crushers'
+      ]
+    },
+  ],
+  'Legs + Core': [
+    {
+      name: 'Legs', exercises: [
+        'Smith Machine Squat','Dumbbell Romanian Deadlift','Bulgarian Split Squat',
+        'Dumbbell Walking Lunge','Leg Press','Goblet Squat','Leg Curl'
+      ]
+    },
+    {
+      name: 'Calves', exercises: [
+        'Standing Calf Raise','Seated Calf Raise','Single-Leg Calf Raise'
+      ]
+    },
+    {
+      name: 'Core', exercises: [
+        'Hanging Knee Raise','Plank','Dumbbell Russian Twist',
+        'Ab Wheel Rollout','Hanging Leg Raise','Side Plank','Cable Crunch'
+      ]
+    },
+  ],
+  'Cardio': [],
+  'Rest': [],
+};
+
+const WEEKS = [
+  { label:"WEEK 1 — Reactivation", theme:"Re-establish movement patterns. Form over weight.", days:[
+    {day:"MON",type:"strength",label:"Chest + Back",note:"Push/pull superset style. Focus on form.",cardio:null},
+    {day:"TUE",type:"cardio",label:"Run Day",note:"Easy pace. Build aerobic base.",cardio:{type:"Easy Run",dist:"2.5–3 miles",pace:"Conversational (~10–11 min/mi)"}},
+    {day:"WED",type:"strength",label:"Shoulders + Arms",note:"Full arm day. Control the movement.",cardio:null},
+    {day:"THU",type:"cardio",label:"Run Day",note:"Same as Tuesday. Consistency over speed.",cardio:{type:"Easy Run",dist:"2.5–3 miles",pace:"Conversational pace"}},
+    {day:"FRI",type:"strength",label:"Legs + Core",note:"Foundation movement. Depth on squats.",cardio:null},
+    {day:"SAT",type:"cardio",label:"Long Run / Hike",note:"Low intensity, long duration.",cardio:{type:"Long Run or Hike",dist:"4–5 miles",pace:"Easy / enjoy it"}},
+    {day:"SUN",type:"rest",label:"Rest + Recovery",note:"Walk, stretch, foam roll.",cardio:null},
+  ]},
+  { label:"WEEK 2 — Foundation", theme:"Add 5–10 lbs to compounds. Intensity up 10–15%.", days:[
+    {day:"MON",type:"strength",label:"Chest + Back",note:"Add weight to all pressing from Week 1.",cardio:null},
+    {day:"TUE",type:"cardio",label:"Interval Run",note:"Start adding tempo work.",cardio:{type:"Interval Run",dist:"3 miles total",pace:"1mi easy → 1mi tempo → 1mi cool-down"}},
+    {day:"WED",type:"strength",label:"Shoulders + Arms",note:"Add 1 extra set per muscle group.",cardio:null},
+    {day:"THU",type:"cardio",label:"Easy Run",note:"Keep it easy. Build the base.",cardio:{type:"Easy Run",dist:"3 miles",pace:"Easy pace"}},
+    {day:"FRI",type:"strength",label:"Legs + Core",note:"Push squat depth. Hamstring focus.",cardio:null},
+    {day:"SAT",type:"cardio",label:"Long Run",note:"Slightly longer than Week 1.",cardio:{type:"Long Run",dist:"5 miles",pace:"Easy pace"}},
+    {day:"SUN",type:"rest",label:"Rest + Recovery",note:"Full rest. Sleep is training.",cardio:null},
+  ]},
+  { label:"WEEK 3 — Build Phase", theme:"Progressive overload. Heavier compounds.", days:[
+    {day:"MON",type:"strength",label:"Chest + Back",note:"Chase heavier compounds.",cardio:null},
+    {day:"TUE",type:"cardio",label:"Tempo Run",note:"First real tempo push.",cardio:{type:"Tempo Run",dist:"3.5 miles",pace:"1mi easy → 1.5mi at 8:00/mi → 1mi cool-down"}},
+    {day:"WED",type:"strength",label:"Shoulders + Arms",note:"Volume and intensity both up.",cardio:null},
+    {day:"THU",type:"strength",label:"Chest + Back (Hotel)",note:"Travel-friendly — dumbbells and bodyweight.",cardio:null},
+    {day:"FRI",type:"strength",label:"Legs + Core",note:"Add weight to everything.",cardio:null},
+    {day:"SAT",type:"cardio",label:"Long Run",note:"",cardio:{type:"Long Run",dist:"5.5 miles",pace:"Easy — conversational"}},
+    {day:"SUN",type:"rest",label:"Rest + Recovery",note:"Mobility work. 10 min stretch minimum.",cardio:null},
+  ]},
+  { label:"WEEK 4 — Deload", theme:"Drop volume 40%. Let gains consolidate.", days:[
+    {day:"MON",type:"strength",label:"Chest + Back",note:"60–70% of usual weight. Mind-muscle connection.",cardio:null},
+    {day:"TUE",type:"cardio",label:"Easy Run",note:"",cardio:{type:"Easy Run",dist:"3 miles",pace:"Very easy. Enjoy it."}},
+    {day:"WED",type:"strength",label:"Shoulders + Arms",note:"Light weight, high reps.",cardio:null},
+    {day:"THU",type:"rest",label:"Active Recovery",note:"Walk or light hike. No structured training.",cardio:null},
+    {day:"FRI",type:"strength",label:"Legs + Core",note:"",cardio:null},
+    {day:"SAT",type:"cardio",label:"Hike or Easy Run",note:"",cardio:{type:"Hike or Easy Run",dist:"4–5 miles",pace:"Very easy"}},
+    {day:"SUN",type:"rest",label:"Full Rest",note:"Sleep in. Eat well. You've earned it.",cardio:null},
+  ]},
+  { label:"WEEK 5 — Intensity Spike", theme:"Post-deload surge. Chase PRs.", days:[
+    {day:"MON",type:"strength",label:"Chest + Back",note:"Heaviest weights yet.",cardio:null},
+    {day:"TUE",type:"cardio",label:"Speed Intervals",note:"",cardio:{type:"Speed Intervals",dist:"3.5 miles total",pace:"400m hard / 400m easy × 6 rounds"}},
+    {day:"WED",type:"strength",label:"Shoulders + Arms",note:"Push it. Arms are visibly bigger.",cardio:null},
+    {day:"THU",type:"cardio",label:"Tempo Run",note:"",cardio:{type:"Tempo Run",dist:"4 miles",pace:"1mi easy → 2mi at 7:45–8:00/mi → 1mi cool-down"}},
+    {day:"FRI",type:"strength",label:"Legs + Core",note:"Squat heavy.",cardio:null},
+    {day:"SAT",type:"cardio",label:"Long Run",note:"",cardio:{type:"Long Run",dist:"6 miles",pace:"Easy-moderate"}},
+    {day:"SUN",type:"rest",label:"Rest + Recovery",note:"Document progress.",cardio:null},
+  ]},
+  { label:"WEEK 6 — Peak Volume", theme:"Highest volume week.", days:[
+    {day:"MON",type:"strength",label:"Chest + Back",note:"Volume and intensity at peak.",cardio:null},
+    {day:"TUE",type:"cardio",label:"Speed Work",note:"",cardio:{type:"Speed Intervals",dist:"4 miles total",pace:"800m hard / 400m easy × 4 rounds"}},
+    {day:"WED",type:"strength",label:"Shoulders + Arms",note:"",cardio:null},
+    {day:"THU",type:"cardio",label:"Tempo Run",note:"",cardio:{type:"Tempo Run",dist:"4.5 miles",pace:"1mi easy → 2.5mi at 7:30–7:45/mi → 1mi cool-down"}},
+    {day:"FRI",type:"strength",label:"Legs + Core",note:"",cardio:null},
+    {day:"SAT",type:"cardio",label:"Long Run",note:"Last mile at goal 5K pace.",cardio:{type:"Long Run",dist:"6.5 miles",pace:"Easy with final mile at race pace"}},
+    {day:"SUN",type:"rest",label:"Rest + Recovery",note:"Take progress photos.",cardio:null},
+  ]},
+  { label:"WEEK 7 — Strength Peak", theme:"Chase PRs. Runs getting faster.", days:[
+    {day:"MON",type:"strength",label:"Chest + Back",note:"Go for personal bests.",cardio:null},
+    {day:"TUE",type:"cardio",label:"5K Time Trial",note:"Run your best 5K.",cardio:{type:"5K Time Trial",dist:"3.1 miles",pace:"All out — see what you've got"}},
+    {day:"WED",type:"strength",label:"Shoulders + Arms",note:"",cardio:null},
+    {day:"THU",type:"cardio",label:"Easy Recovery Run",note:"",cardio:{type:"Easy Run",dist:"3 miles",pace:"Very easy"}},
+    {day:"FRI",type:"strength",label:"Legs + Core",note:"Squat PR attempt.",cardio:null},
+    {day:"SAT",type:"cardio",label:"Long Run",note:"Celebrate how far you've come.",cardio:{type:"Long Run",dist:"7 miles",pace:"Easy"}},
+    {day:"SUN",type:"rest",label:"Rest + Recovery",note:"Sleep hard. Eat clean.",cardio:null},
+  ]},
+  { label:"WEEK 8 — PRIME WEEK", theme:"Final push. This is why you started.", days:[
+    {day:"MON",type:"strength",label:"Chest + Back",note:"",cardio:null},
+    {day:"TUE",type:"cardio",label:"Speed Work — Final",note:"You're faster now.",cardio:{type:"Speed Intervals",dist:"4 miles",pace:"Push beyond Week 6 effort"}},
+    {day:"WED",type:"strength",label:"Shoulders + Arms",note:"",cardio:null},
+    {day:"THU",type:"cardio",label:"Tempo Run — Final",note:"",cardio:{type:"Tempo Run",dist:"5 miles",pace:"1mi easy → 3mi at 7:15–7:30/mi → 1mi cool-down"}},
+    {day:"FRI",type:"strength",label:"Legs + Core",note:"",cardio:null},
+    {day:"SAT",type:"cardio",label:"Final 5K Time Trial",note:"Leave nothing behind.",cardio:{type:"5K Time Trial",dist:"3.1 miles",pace:"All out."}},
+    {day:"SUN",type:"rest",label:"Celebrate + Reflect",note:"Compare Week 1 vs Week 8. You did it.",cardio:null},
+  ]},
+];
+
+// ============================================================
+// LOCALSTORAGE HELPERS
+// ============================================================
+function saveLog(key, data) {
+  try { localStorage.setItem('nh_' + key, JSON.stringify(data)); } catch(e) {}
+}
+function loadLog(key) {
+  try { const d = localStorage.getItem('nh_' + key); return d ? JSON.parse(d) : null; } catch(e) { return null; }
+}
+
+// Key format: "muscle_ChestBack_Chest" → stores { date, exercise, sets, reps, weight, volume }
+function muscleKey(dayLabel, muscleName) {
+  return 'log_' + dayLabel.replace(/\W+/g,'') + '_' + muscleName.replace(/\W+/g,'');
+}
+
+function getLastSession(dayLabel, muscleName) {
+  return loadLog(muscleKey(dayLabel, muscleName));
+}
+
+function saveSession(dayLabel, muscleName, data) {
+  // Save current to history list too
+  const histKey = 'hist_' + dayLabel.replace(/\W+/g,'') + '_' + muscleName.replace(/\W+/g,'');
+  let hist = loadLog(histKey.replace('nh_','')) || [];
+  hist.unshift({ ...data, savedAt: new Date().toISOString() });
+  if (hist.length > 10) hist = hist.slice(0, 10); // keep last 10 sessions
+  saveLog(histKey.replace('nh_',''), hist);
+  saveLog(muscleKey(dayLabel, muscleName), data);
+}
+
+// ============================================================
+// PAGE NAV
+// ============================================================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  if (id === 'train') buildTrainPage();
+  if (id === 'plan') buildPlan();
+}
+
+// ============================================================
+// DATE + DAY
+// ============================================================
+function updateDate() {
+  const now = new Date();
+  const dayNum = Math.max(1, Math.floor((now - START_DATE) / 86400000) + 1);
+  const weekNum = Math.min(8, Math.ceil(dayNum / 7));
+  document.getElementById('dateBadge').innerHTML =
+    now.toLocaleDateString('en-US', {month:'short', day:'numeric'}) +
+    `<br/><span>Week ${weekNum} · Day ${dayNum}</span>`;
+}
+
+// ============================================================
+// TODAY PAGE
+// ============================================================
+function loadToday() {
+  const idx = new Date().getDay();
+  const v = DAILY_VERSES[idx % DAILY_VERSES.length];
+  const m = DAILY_MOTIVES[idx % DAILY_MOTIVES.length];
+  document.getElementById('todayVerse').textContent = `"${v.text}"`;
+  document.getElementById('todayVerseRef').textContent = v.ref;
+  document.getElementById('todayMotive').textContent = `"${m.text}"`;
+  document.getElementById('todayMotiveAttr').textContent = `— ${m.attr}`;
+
+  const now = new Date();
+  const dayNum = Math.max(0, Math.floor((now - START_DATE) / 86400000));
+  const weekIdx = Math.min(7, Math.floor(dayNum / 7));
+  const dayOfWeek = now.getDay();
+  const dayMap = [6,0,1,2,3,4,5];
+  const todayDay = WEEKS[weekIdx].days[dayMap[dayOfWeek]];
+  const el = document.getElementById('todayWorkout');
+  if (!todayDay) return;
+  const typeColor = todayDay.type === 'strength' ? 'var(--amber)' : todayDay.type === 'cardio' ? 'var(--teal)' : 'var(--muted)';
+  let html = `<div style="color:${typeColor};font-weight:700;font-size:15px;margin-bottom:6px;">${todayDay.label}</div>`;
+  if (todayDay.note) html += `<div style="font-size:11px;color:var(--muted);margin-bottom:10px;">${todayDay.note}</div>`;
+  if (todayDay.type === 'strength') {
+    html += `<button onclick="showPage('train')" style="width:100%;padding:12px;border-radius:10px;border:none;background:var(--amber);color:#000;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:1px;">LOG TODAY'S WORKOUT →</button>`;
+  } else if (todayDay.cardio) {
+    html += `<div style="font-size:12px;color:var(--cream);">📏 ${todayDay.cardio.dist}<br/>⏱ ${todayDay.cardio.pace}</div>`;
+  }
+  el.innerHTML = html;
+}
+
+// ============================================================
+// TRAIN PAGE — WORKOUT LOGGER
+// ============================================================
+function buildTrainPage() {
+  const now = new Date();
+  const dayNum = Math.max(0, Math.floor((now - START_DATE) / 86400000));
+  const weekIdx = Math.min(7, Math.floor(dayNum / 7));
+  const dayOfWeek = now.getDay();
+  const dayMap = [6,0,1,2,3,4,5];
+  const todayDay = WEEKS[weekIdx].days[dayMap[dayOfWeek]];
+  const container = document.getElementById('trainContent');
+
+  if (!todayDay || todayDay.type !== 'strength') {
+    const msg = todayDay && todayDay.type === 'cardio'
+      ? `<div class="card card-teal"><div class="section-label">Today is a Cardio Day</div><div style="font-size:14px;font-weight:700;color:var(--teal);">${todayDay.label}</div>${todayDay.cardio ? `<div style="font-size:12px;color:var(--cream);margin-top:8px;">📏 ${todayDay.cardio.dist}<br/>⏱ ${todayDay.cardio.pace}</div>` : ''}</div>`
+      : `<div class="card"><div class="section-label">Rest Day</div><div style="font-size:14px;color:var(--muted);">Recovery is part of the program. Walk, stretch, rest.</div></div>`;
+    container.innerHTML = msg + buildHistorySection();
+    return;
+  }
+
+  const muscleGroups = MUSCLE_GROUPS[todayDay.label] || [];
+  let html = `<div style="font-size:12px;color:var(--muted);margin-bottom:16px;padding:0 2px;">
+    <strong style="color:var(--amber)">${WEEKS[weekIdx].label.split('—')[0].trim()}</strong> — ${todayDay.label}
+    <span style="color:var(--muted);"> · ${now.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>
+  </div>`;
+
+  muscleGroups.forEach((mg, mIdx) => {
+    const last = getLastSession(todayDay.label, mg.name);
+    const uid = `mg_${mIdx}`;
+    html += `
+    <div class="muscle-group-card">
+      <div class="muscle-group-header" onclick="toggleMuscle('${uid}')">
+        <div>
+          <div class="muscle-group-title">${mg.name}</div>
+          <div class="muscle-group-sub">${last ? `Last: ${last.exercise} · ${last.sets}×${last.reps} @ ${last.weight}lbs` : 'No previous session'}</div>
+        </div>
+        <span class="muscle-chevron" id="chev_${uid}">›</span>
+      </div>
+      <div class="muscle-body" id="body_${uid}">
+        ${last ? `
+        <div class="last-session-box">
+          <div class="last-session-label">⟳ Last Session</div>
+          <div class="last-session-row"><strong>${last.exercise}</strong></div>
+          <div class="last-session-row">${last.sets} sets × ${last.reps} reps @ ${last.weight} lbs</div>
+          <div class="last-session-vol">Total Volume: ${(last.sets * last.reps * last.weight).toLocaleString()} lbs</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">${new Date(last.savedAt||Date.now()).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
+        </div>` : ''}
+
+        <div class="exercise-select-label">Choose Exercise</div>
+        <select class="exercise-picker" id="ex_${uid}" onchange="updateVolume('${uid}')">
+          ${mg.exercises.map(e => `<option value="${e}"${last && last.exercise===e?' selected':''}>${e}</option>`).join('')}
+        </select>
+
+        <div class="exercise-select-label" style="margin-top:14px;">Log Your Sets</div>
+        <div class="volume-inputs">
+          <div class="vol-input-group">
+            <div class="vol-label">Sets</div>
+            <input class="vol-input" type="number" id="sets_${uid}" min="1" max="10" value="${last ? last.sets : 4}" inputmode="numeric" onchange="updateVolume('${uid}')"/>
+          </div>
+          <div class="vol-input-group">
+            <div class="vol-label">Reps</div>
+            <input class="vol-input" type="number" id="reps_${uid}" min="1" max="30" value="${last ? last.reps : 10}" inputmode="numeric" onchange="updateVolume('${uid}')"/>
+          </div>
+          <div class="vol-input-group">
+            <div class="vol-label">Weight (lbs)</div>
+            <input class="vol-input" type="number" id="wt_${uid}" min="0" max="1000" value="${last ? last.weight : 0}" inputmode="decimal" onchange="updateVolume('${uid}')"/>
+          </div>
+        </div>
+        <div class="vol-total" id="vol_${uid}">
+          Total Volume: ${last ? (last.sets*last.reps*last.weight).toLocaleString() : '0'} lbs
+        </div>
+
+        <button class="log-btn" id="btn_${uid}" onclick="logSet('${uid}','${todayDay.label}','${mg.name}')">
+          SAVE ${mg.name.toUpperCase()}
+        </button>
+      </div>
+    </div>`;
+  });
+
+  html += buildHistorySection();
+  container.innerHTML = html;
+}
+
+function toggleMuscle(uid) {
+  const body = document.getElementById('body_' + uid);
+  const chev = document.getElementById('chev_' + uid);
+  const open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  chev.classList.toggle('open', !open);
+}
+
+function updateVolume(uid) {
+  const sets = parseInt(document.getElementById('sets_'+uid).value) || 0;
+  const reps = parseInt(document.getElementById('reps_'+uid).value) || 0;
+  const wt   = parseFloat(document.getElementById('wt_'+uid).value) || 0;
+  const vol  = sets * reps * wt;
+  document.getElementById('vol_'+uid).textContent = `Total Volume: ${vol.toLocaleString()} lbs`;
+}
+
+function logSet(uid, dayLabel, muscleName) {
+  const exercise = document.getElementById('ex_'+uid).value;
+  const sets     = parseInt(document.getElementById('sets_'+uid).value) || 0;
+  const reps     = parseInt(document.getElementById('reps_'+uid).value) || 0;
+  const weight   = parseFloat(document.getElementById('wt_'+uid).value) || 0;
+  const volume   = sets * reps * weight;
+
+  saveSession(dayLabel, muscleName, { exercise, sets, reps, weight, volume, savedAt: new Date().toISOString() });
+
+  const btn = document.getElementById('btn_'+uid);
+  btn.textContent = '✓ SAVED';
+  btn.classList.add('saved');
+  setTimeout(() => {
+    btn.textContent = `SAVE ${muscleName.toUpperCase()}`;
+    btn.classList.remove('saved');
+  }, 2000);
+}
+
+// ============================================================
+// HISTORY SECTION
+// ============================================================
+function buildHistorySection() {
+  // Gather all history entries from localStorage
+  const allKeys = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('nh_hist_')) allKeys.push(k.replace('nh_',''));
+    }
+  } catch(e) {}
+
+  if (allKeys.length === 0) return '';
+
+  let entries = [];
+  allKeys.forEach(k => {
+    const hist = loadLog(k) || [];
+    hist.forEach(h => entries.push({ ...h, key: k }));
+  });
+
+  entries.sort((a,b) => new Date(b.savedAt) - new Date(a.savedAt));
+  entries = entries.slice(0, 15);
+
+  if (entries.length === 0) return '';
+
+  let html = `<div style="margin-top:20px;">
+    <div class="section-label">Recent History</div>`;
+  entries.forEach(e => {
+    const muscle = e.key.replace('hist_','').split('_').pop();
+    html += `
+    <div class="history-entry">
+      <div class="history-date">${new Date(e.savedAt).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}</div>
+      <div class="history-muscle">${e.exercise} <span style="color:var(--muted);font-weight:400;font-size:11px;">· ${muscle}</span></div>
+      <div class="history-detail">${e.sets} sets × ${e.reps} reps @ ${e.weight} lbs</div>
+      <div class="history-vol">Volume: ${(e.sets*e.reps*e.weight).toLocaleString()} lbs</div>
+    </div>`;
+  });
+
+  html += `<button class="clear-btn" onclick="clearHistory()">Clear All Workout History</button></div>`;
+  return html;
+}
+
+function clearHistory() {
+  if (!confirm('Clear all saved workout data? This cannot be undone.')) return;
+  try {
+    const toRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('nh_')) toRemove.push(k);
+    }
+    toRemove.forEach(k => localStorage.removeItem(k));
+  } catch(e) {}
+  buildTrainPage();
+}
+
+// ============================================================
+// PLAN PAGE
+// ============================================================
+let currentWeek = 0;
+function buildPlan() {
+  const scroller = document.getElementById('weekScroller');
+  scroller.innerHTML = WEEKS.map((w,i) =>
+    `<button class="week-pill${i===currentWeek?' active':''}" onclick="selectWeek(${i})" id="pill-${i}">${i+1}</button>`
+  ).join('');
+  renderWeek(currentWeek);
+}
+
+function selectWeek(i) {
+  currentWeek = i;
+  document.querySelectorAll('.week-pill').forEach(p => p.classList.remove('active'));
+  document.getElementById('pill-'+i).classList.add('active');
+  renderWeek(i);
+}
+
+function renderWeek(i) {
+  const w = WEEKS[i];
+  let html = `<div class="card card-amber" style="margin-bottom:12px;">
+    <div class="section-label">${w.label}</div>
+    <div style="font-size:13px;color:var(--cream);line-height:1.5;">${w.theme}</div>
+  </div>`;
+
+  w.days.forEach((day, di) => {
+    const tagClass = day.type==='strength'?'tag-strength':day.type==='cardio'?'tag-cardio':'tag-rest';
+    const typeEmoji = day.type==='strength'?'💪':day.type==='cardio'?'🏃':'😴';
+    html += `<div class="day-row">
+      <button class="day-header" onclick="toggleDay('d-${i}-${di}')">
+        <span class="day-tag ${tagClass}">${day.day}</span>
+        <span><div class="day-title">${day.label}</div><div class="day-sub">${typeEmoji} ${day.type.toUpperCase()}</div></span>
+        <span class="day-chevron" id="chev-d-${i}-${di}">›</span>
+      </button>
+      <div class="day-body" id="d-${i}-${di}">`;
+    if (day.note) html += `<div class="day-note">${day.note}</div>`;
+    if (day.cardio) {
+      html += `<div class="cardio-box">
+        <div class="cardio-title">${day.cardio.type}</div>
+        <div class="cardio-row">📏 ${day.cardio.dist}</div>
+        <div class="cardio-row">⏱ ${day.cardio.pace}</div>
+      </div>`;
+    }
+    if (day.type === 'strength') {
+      const mg = MUSCLE_GROUPS[day.label] || [];
+      mg.forEach(g => {
+        html += `<div style="margin-top:10px;">
+          <div style="font-size:9px;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">${g.name}</div>
+          <div style="font-size:11px;color:var(--muted);">${g.exercises.slice(0,4).join(' · ')}</div>
+        </div>`;
+      });
+    }
+    html += `</div></div>`;
+  });
+
+  document.getElementById('weekContent').innerHTML = html;
+}
+
+function toggleDay(id) {
+  const body = document.getElementById(id);
+  const chev = document.getElementById('chev-'+id);
+  const open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  chev.classList.toggle('open', !open);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+updateDate();
+loadToday();
+buildPlan();
+
+const now = new Date();
+const dayNum = Math.max(0, Math.floor((now - START_DATE) / 86400000));
+const autoWeek = Math.min(7, Math.floor(dayNum / 7));
+if (autoWeek > 0) setTimeout(() => selectWeek(autoWeek), 100);
+</script>
+</body>
+</html>
